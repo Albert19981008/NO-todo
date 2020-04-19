@@ -1,13 +1,14 @@
 package com.gang.notodo
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.gang.notodo.data.Task
 import com.gang.notodo.data.local.TaskDao
 import com.gang.notodo.data.local.TodoDatabase
 import com.gang.notodo.util.AppExecutors
+import com.gang.notodo.util.loge
+import com.gang.notodo.util.toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,18 +20,15 @@ class MainActivity : AppCompatActivity() {
         initView()
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
-
     private fun testDao() {
         val dao: TaskDao = TodoDatabase.getInstance(this).taskDao()
         val task = Task("testTitle", "testDes")
         dao.insertTask(task)
         val li = dao.getAllTasks()
-        Log.e("test", "sssssssss")
-        Log.e("test", li.toString())
-
+        loge("sssssssss")
+        loge( li.toString())
+        dao.deleteTasks()
+        executors.mainThread.execute { toast(li.toString()) }
     }
 
     private fun initView() {
