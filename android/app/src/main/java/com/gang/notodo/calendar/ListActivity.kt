@@ -61,12 +61,13 @@ class ListActivity : AppCompatActivity(),
     }
 
     private fun initData() {
+        randomInitData()
+    }
 
+    private fun randomInitData() {
         val year = mCalendarView.curYear
         val month = mCalendarView.curMonth
-
         val map = HashMap<String, Calendar>()
-
 
         for (i in 1..28) {
             if (Random.nextBoolean()) {
@@ -77,7 +78,6 @@ class ListActivity : AppCompatActivity(),
 
         //此方法在巨大的数据量上不影响遍历性能，推荐使用
         mCalendarView.setSchemeDate(map)
-
     }
 
     private fun getSchemeCalendar(

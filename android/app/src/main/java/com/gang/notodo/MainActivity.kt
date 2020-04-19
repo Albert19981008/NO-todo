@@ -21,6 +21,15 @@ class MainActivity : AppCompatActivity() {
         initView()
     }
 
+
+    private fun initView() {
+        val buttonLogin: Button = findViewById(R.id.button_login)
+        buttonLogin.setOnClickListener {
+//            testDao()
+            startActivity<ListActivity>()
+        }
+    }
+
     private fun testDao() {
         executors.diskIO.execute {
             val dao: TaskDao = TodoApplication.todoApplication
@@ -32,18 +41,6 @@ class MainActivity : AppCompatActivity() {
             loge(li.toString())
             dao.deleteTasks()
             executors.mainThread.execute { toast(li.toString()) }
-        }
-    }
-
-    private fun testNewActivity() {
-        startActivity<ListActivity>()
-    }
-
-    private fun initView() {
-        val buttonLogin: Button = findViewById(R.id.button_login)
-        buttonLogin.setOnClickListener {
-            testDao()
-            testNewActivity()
         }
     }
 }
