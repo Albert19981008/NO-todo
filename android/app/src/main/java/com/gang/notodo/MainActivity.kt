@@ -13,7 +13,7 @@ import com.gang.notodo.util.toast
 
 class MainActivity : AppCompatActivity() {
 
-    private val executors = AppExecutors()
+    private val executors = AppExecutors
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         //设置Login监听器
         buttonLogin.setOnClickListener {
+            testDao()
             testNewActivity()
         }
     }

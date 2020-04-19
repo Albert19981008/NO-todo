@@ -9,11 +9,13 @@ import java.util.concurrent.Executors
 /**
  * App 线程池
  */
-class AppExecutors(
-    val diskIO: Executor = Executors.newSingleThreadExecutor(),
-    val networkIO: Executor = Executors.newFixedThreadPool(THREAD_COUNT),
+object AppExecutors {
+
+    private const val THREAD_COUNT = 3
+
+    val diskIO: Executor = Executors.newSingleThreadExecutor()
+    val networkIO: Executor = Executors.newFixedThreadPool(THREAD_COUNT)
     val mainThread: Executor = MainThreadExecutor()
-) {
 
     private class MainThreadExecutor : Executor {
 
@@ -24,7 +26,4 @@ class AppExecutors(
         }
     }
 
-    companion object {
-        const val THREAD_COUNT = 3
-    }
 }
