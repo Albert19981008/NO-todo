@@ -1,7 +1,6 @@
 package com.gang.notodo
 
 import android.app.Application
-import androidx.room.Room
 import com.gang.notodo.data.local.TodoDatabase
 
 

@@ -8,6 +8,7 @@ import com.gang.notodo.data.local.TaskDao
 import com.gang.notodo.data.local.TodoDatabase
 import com.gang.notodo.util.AppExecutors
 import com.gang.notodo.util.loge
+import com.gang.notodo.util.startActivity
 import com.gang.notodo.util.toast
 
 class MainActivity : AppCompatActivity() {
@@ -21,14 +22,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun testDao() {
-        val dao: TaskDao = TodoDatabase.getInstance(this).taskDao()
-        val task = Task("testTitle", "testDes")
-        dao.insertTask(task)
-        val li = dao.getAllTasks()
-        loge("sssssssss")
-        loge( li.toString())
-        dao.deleteTasks()
-        executors.mainThread.execute { toast(li.toString()) }
+        executors.diskIO.execute {
+            val dao: TaskDao = TodoDatabase.getInstance(this).taskDao()
+            val task = Task("testTitle", "testDes")
+            dao.insertTask(task)
+            val li = dao.getAllTasks()
+            loge(li.toString())
+            dao.deleteTasks()
+            executors.mainThread.execute { toast(li.toString()) }
+        }
+    }
+
+    private fun testNewActivity() {
+        startActivity<ListActivity>()
     }
 
     private fun initView() {
@@ -37,9 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         //设置Login监听器
         buttonLogin.setOnClickListener {
-            executors.diskIO.execute {
-                testDao()
-            }
+            testNewActivity()
         }
     }
 }
