@@ -38,10 +38,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        //测试按钮
         val buttonLogin: Button = findViewById(R.id.button_login)
-
-        //设置Login监听器
         buttonLogin.setOnClickListener {
             testDao()
             testNewActivity()
