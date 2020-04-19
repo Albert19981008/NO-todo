@@ -23,7 +23,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun testDao() {
         executors.diskIO.execute {
-            val dao: TaskDao = TodoDatabase.getInstance(this).taskDao()
+            val dao: TaskDao = TodoApplication.todoApplication
+                ?.todoDatabase
+                ?.taskDao()!!
             val task = Task("testTitle", "testDes")
             dao.insertTask(task)
             val li = dao.getAllTasks()
