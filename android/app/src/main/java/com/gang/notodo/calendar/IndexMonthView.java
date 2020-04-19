@@ -9,6 +9,7 @@ import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.MonthView;
 
 public class IndexMonthView extends MonthView {
+
     private Paint mSchemeBasicPaint = new Paint();
     private int mPadding;
     private int mH, mW;
