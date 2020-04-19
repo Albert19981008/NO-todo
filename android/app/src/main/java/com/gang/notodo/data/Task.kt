@@ -5,6 +5,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.*
 
+/**
+ * 任务实体类
+ */
 @Entity(tableName = "tasks")
 data class Task @JvmOverloads constructor(
     @ColumnInfo(name = "title") var title: String = "",
