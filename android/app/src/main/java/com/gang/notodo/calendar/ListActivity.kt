@@ -47,10 +47,10 @@ class ListActivity : AppCompatActivity(),
         mTextLunar = findViewById(R.id.tv_lunar)
         mRelativeTool = findViewById(R.id.rl_tool)
         mCalendarView = findViewById(R.id.calendarView)
-        mTextMonthDay.setOnClickListener(View.OnClickListener {
+        mTextMonthDay.setOnClickListener {
             mCalendarView.showYearSelectLayout(mYear)
             mTextMonthDay.setText(mYear.toString())
-        })
+        }
 
         mCalendarView.setOnCalendarSelectListener(this)
         mCalendarView.setOnYearChangeListener(this)
