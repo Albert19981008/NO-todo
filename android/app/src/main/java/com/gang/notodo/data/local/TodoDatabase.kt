@@ -22,7 +22,7 @@ abstract class TodoDatabase : RoomDatabase() {
             synchronized(LOCK) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.applicationContext,
-                        TodoDatabase::class.java, "Tasks.db")
+                        TodoDatabase::class.java, "todo.db")
                         .build()
                 }
                 return INSTANCE!!

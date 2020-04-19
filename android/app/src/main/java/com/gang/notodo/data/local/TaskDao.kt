@@ -6,13 +6,13 @@ import com.gang.notodo.data.Task
 @Dao
 interface TaskDao {
 
-    @Query("select * from Tasks")
+    @Query("select * from tasks")
     fun getAllTasks(): List<Task>
 
     /**
      * 通过 id 查找任务
      */
-    @Query("select * from Tasks where entryId = :taskId")
+    @Query("select * from tasks where entryId = :taskId")
     fun getTaskById(taskId: String): Task?
 
     /**
@@ -36,14 +36,14 @@ interface TaskDao {
     fun updateCompleted(taskId: String, completed: Boolean)
 
 
-    @Query("delete from Tasks where entryId = :taskId")
+    @Query("delete from tasks where entryId = :taskId")
     fun deleteTaskById(taskId: String): Int
 
 
-    @Query("delete from Tasks")
+    @Query("delete from tasks")
     fun deleteTasks()
 
 
-    @Query("delete from Tasks where completed = 1")
+    @Query("delete from tasks where completed = 1")
     fun deleteCompletedTasks(): Int
 }

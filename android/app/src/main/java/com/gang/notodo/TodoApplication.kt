@@ -1,12 +1,16 @@
 package com.gang.notodo
 
 import android.app.Application
-import android.util.Log
+import androidx.room.Room
+import com.gang.notodo.data.local.TodoDatabase
+
 
 class TodoApplication : Application() {
 
+    var todoDatabase: TodoDatabase? = null
+
     private fun initDb() {
-        Log.e("application", "init")
+        todoDatabase = TodoDatabase.getInstance(this)
     }
 
     override fun onCreate() {

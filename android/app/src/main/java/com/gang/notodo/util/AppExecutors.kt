@@ -9,7 +9,7 @@ import java.util.concurrent.Executors
 /**
  * App 线程池
  */
-class AppExecutors (
+class AppExecutors(
     val diskIO: Executor = Executors.newSingleThreadExecutor(),
     val networkIO: Executor = Executors.newFixedThreadPool(THREAD_COUNT),
     val mainThread: Executor = MainThreadExecutor()
