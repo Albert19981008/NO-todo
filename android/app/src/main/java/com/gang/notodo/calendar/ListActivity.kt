@@ -1,20 +1,18 @@
 package com.gang.notodo.calendar
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.appcompat.app.AppCompatActivity
 import com.gang.notodo.R
 import com.gang.notodo.util.loge
 import com.haibin.calendarview.Calendar
-import com.haibin.calendarview.CalendarLayout
 import com.haibin.calendarview.CalendarView
-import java.util.HashMap
+import java.util.*
+import kotlin.random.Random
 
 class ListActivity : AppCompatActivity(),
     CalendarView.OnCalendarSelectListener,
@@ -68,24 +66,15 @@ class ListActivity : AppCompatActivity(),
         val month = mCalendarView.curMonth
 
         val map = HashMap<String, Calendar>()
-        val c1 = getSchemeCalendar(year, month, 3, RandomColor.getRandomColor(), "假")
-        map[c1.toString()] = c1
-        map[getSchemeCalendar(year, month, 6, -0x196ec8, "事").toString()] =
-            getSchemeCalendar(year, month, 6, RandomColor.getRandomColor(), "事")
-        map[getSchemeCalendar(year, month, 9, -0x20ecaa, "议").toString()] =
-            getSchemeCalendar(year, month, 9, RandomColor.getRandomColor(), "议")
-        map[getSchemeCalendar(year, month, 13, -0x123a93, "记").toString()] =
-            getSchemeCalendar(year, month, 13, RandomColor.getRandomColor(), "记")
-        map[getSchemeCalendar(year, month, 14, -0x123a93, "记").toString()] =
-            getSchemeCalendar(year, month, 14, RandomColor.getRandomColor(), "记")
-        map[getSchemeCalendar(year, month, 15, -0x5533bc, "假").toString()] =
-            getSchemeCalendar(year, month, 15, RandomColor.getRandomColor(), "假")
-        map[getSchemeCalendar(year, month, 18, -0x43ec10, "记").toString()] =
-            getSchemeCalendar(year, month, 18, RandomColor.getRandomColor(), "记")
-        map[getSchemeCalendar(year, month, 25, -0xec5310, "假").toString()] =
-            getSchemeCalendar(year, month, 25, RandomColor.getRandomColor(), "假")
-        map[getSchemeCalendar(year, month, 27, -0xec5310, "多").toString()] =
-            getSchemeCalendar(year, month, 27, RandomColor.getRandomColor(), "多")
+
+
+        for (i in 1..28) {
+            if (Random.nextBoolean()) {
+                val c = getSchemeCalendar(year, month, i, RandomColor.getRandomColor(), "")
+                map[c.toString()] = c
+            }
+        }
+
         //此方法在巨大的数据量上不影响遍历性能，推荐使用
         mCalendarView.setSchemeDate(map)
 
