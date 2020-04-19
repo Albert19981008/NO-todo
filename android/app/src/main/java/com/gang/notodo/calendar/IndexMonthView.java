@@ -12,6 +12,7 @@ public class IndexMonthView extends MonthView {
     private Paint mSchemeBasicPaint = new Paint();
     private int mPadding;
     private int mH, mW;
+    private int mRadius;
 
     public IndexMonthView(Context context) {
         super(context);
@@ -26,11 +27,20 @@ public class IndexMonthView extends MonthView {
         mW = dipToPx(getContext(), 8);
     }
 
+    @Override
+    protected void onPreviewHook() {
+        mRadius = Math.min(mItemWidth, mItemHeight) * 5 / 12;
+    }
+
 
     @Override
     protected boolean onDrawSelected(Canvas canvas, Calendar calendar, int x, int y, boolean hasScheme) {
-        mSelectedPaint.setStyle(Paint.Style.FILL);
-        canvas.drawRect(x + mPadding, y + mPadding, x + mItemWidth - mPadding, y + mItemHeight - mPadding, mSelectedPaint);
+//        mSelectedPaint.setStyle(Paint.Style.FILL);
+//        canvas.drawRect(x + mPadding, y + mPadding, x + mItemWidth - mPadding, y + mItemHeight - mPadding, mSelectedPaint);
+//        return true;
+        int cx = x + mItemWidth / 2;
+        int cy = y + mItemHeight / 2;
+        canvas.drawCircle(cx, cy, mRadius, mSelectedPaint);
         return true;
     }
 
