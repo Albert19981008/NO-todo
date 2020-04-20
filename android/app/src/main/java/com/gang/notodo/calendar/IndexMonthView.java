@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.gang.notodo.util.CalendarUtil;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.MonthView;
 
@@ -23,9 +24,9 @@ public class IndexMonthView extends MonthView {
         mSchemeBasicPaint.setTextAlign(Paint.Align.CENTER);
         mSchemeBasicPaint.setColor(0xff333333);
         mSchemeBasicPaint.setFakeBoldText(true);
-        mPadding = dipToPx(getContext(), 4);
-        mH = dipToPx(getContext(), 2);
-        mW = dipToPx(getContext(), 8);
+        mPadding = CalendarUtil.dipToPx(getContext(), 4);
+        mH = CalendarUtil.dipToPx(getContext(), 2);
+        mW = CalendarUtil.dipToPx(getContext(), 8);
     }
 
     @Override
@@ -84,15 +85,4 @@ public class IndexMonthView extends MonthView {
         }
     }
 
-    /**
-     * dp转px
-     *
-     * @param context context
-     * @param dpValue dp
-     * @return px
-     */
-    private static int dipToPx(Context context, float dpValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
-    }
 }

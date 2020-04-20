@@ -8,7 +8,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.gang.notodo.R
+import com.gang.notodo.util.CalendarUtil
 import com.gang.notodo.util.loge
+import com.gang.notodo.util.toast
 import com.haibin.calendarview.Calendar
 import com.haibin.calendarview.CalendarView
 import java.util.*
@@ -71,7 +73,7 @@ class ListActivity : AppCompatActivity(),
 
         for (i in 1..28) {
             if (Random.nextBoolean()) {
-                val c = getSchemeCalendar(year, month, i, RandomColor.getRandomColor(), "")
+                val c = getSchemeCalendar(year, month, i, CalendarUtil.getRandomColor(), "")
                 map[c.toString()] = c
             }
         }
@@ -107,7 +109,7 @@ class ListActivity : AppCompatActivity(),
             mTextLunar.text = it.lunar
             mYear = it.year
         }
-
+        toast(calendar.toString())
     }
 
     override fun onCalendarOutOfRange(calendar: Calendar?) {
