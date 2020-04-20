@@ -3,6 +3,7 @@ package com.gang.notodo.ui
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.gang.notodo.R
 import com.gang.notodo.data.Task
 import com.gang.notodo.data.TaskDataSource
@@ -13,12 +14,14 @@ import com.gang.notodo.util.toast
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var mToolbar: Toolbar
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initView()
     }
-
 
     private fun initView() {
         val buttonLogin: Button = findViewById(R.id.button_login)
@@ -26,6 +29,10 @@ class MainActivity : AppCompatActivity() {
             startActivity<ListActivity>()
             testDb()
         }
+
+        mToolbar = findViewById(R.id.toolBar)
+        mToolbar.title = "NO-todo"
+        setSupportActionBar(mToolbar)
     }
 
     private fun testDb() {

@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.gang.notodo.R
 import com.gang.notodo.util.CalendarUtil
 import com.gang.notodo.util.loge
@@ -31,6 +32,8 @@ class ListActivity : AppCompatActivity(),
 
     private lateinit var mRelativeTool: LinearLayout
 
+    private lateinit var mToolbar: Toolbar
+
     private var mYear: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +52,7 @@ class ListActivity : AppCompatActivity(),
         mCalendarView = findViewById(R.id.calendarView)
         mTextMonthDay.setOnClickListener {
             mCalendarView.showYearSelectLayout(mYear)
-            mTextMonthDay.setText(mYear.toString())
+            mTextMonthDay.text = mYear.toString()
         }
 
         mCalendarView.setOnCalendarSelectListener(this)
@@ -60,6 +63,10 @@ class ListActivity : AppCompatActivity(),
         loge(mYear.toString())
         mTextMonthDay.text = mCalendarView.curMonth.toString() + "月" + mCalendarView.curDay + "日"
         mTextLunar.text = "今日"
+
+        mToolbar = findViewById(R.id.toolBar)
+        mToolbar.title = "NO-todo"
+        setSupportActionBar(mToolbar)
     }
 
     private fun initData() {
