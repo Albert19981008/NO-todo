@@ -7,14 +7,14 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.widget.Toolbar
 import com.gang.notodo.R
 import com.gang.notodo.util.CalendarUtil
 import com.gang.notodo.util.CalendarUtil.getSchemeCalendar
-import com.gang.notodo.util.loge
 import com.gang.notodo.util.setupActionBar
+import com.gang.notodo.util.startActivity
 import com.gang.notodo.util.toast
 import com.haibin.calendarview.Calendar
 import com.haibin.calendarview.CalendarView
@@ -28,9 +28,12 @@ class TaskActivity : AppCompatActivity(),
     CalendarView.OnYearChangeListener,
     PopupMenu.OnMenuItemClickListener {
 
-    private lateinit var mTextMonthDay: TextView
 
     private lateinit var mRootView: View
+
+    private lateinit var mToolBar: Toolbar
+
+    private lateinit var mTextMonthDay: TextView
 
     private lateinit var mTextYear: TextView
 
@@ -44,13 +47,14 @@ class TaskActivity : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_list)
+        setContentView(R.layout.activity_calendar)
         initView()
         initData()
     }
 
     @SuppressLint("SetTextI18n")
     private fun initView() {
+        mToolBar = findViewById(R.id.toolBar)
         mRootView = findViewById(R.id.root)
         mTextMonthDay = findViewById(R.id.tv_month_day)
         mTextYear = findViewById(R.id.tv_year)
@@ -67,7 +71,6 @@ class TaskActivity : AppCompatActivity(),
         mCalendarView.setOnCalendarLongClickListener(this, false)
         mTextYear.text = mCalendarView.curYear.toString()
         mYear = mCalendarView.curYear
-        loge(mYear.toString())
         mTextMonthDay.text = mCalendarView.curMonth.toString() + "月" + mCalendarView.curDay + "日"
         mTextLunar.text = "今日"
 
@@ -100,9 +103,7 @@ class TaskActivity : AppCompatActivity(),
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            toast("选择菜单")
-
-            val popup = PopupMenu(this, findViewById(R.id.toolBar)) //第二个参数是绑定的那个view
+            val popup = PopupMenu(this, mToolBar)
             val inflater = popup.menuInflater
             inflater.inflate(R.menu.menu_indicator, popup.menu)
             popup.setOnMenuItemClickListener(this)
@@ -118,13 +119,12 @@ class TaskActivity : AppCompatActivity(),
      */
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.item_todo -> Toast.makeText(this, "todo", Toast.LENGTH_SHORT).show()
-            R.id.item_calendar -> Toast.makeText(this, "日历", Toast.LENGTH_SHORT).show()
-            else -> {
-            }
+            R.id.item_todo -> startActivity<ListActivity>()
+            R.id.item_calendar -> toast("已经是日历页")
         }
         return false
     }
+
 
     @SuppressLint("SetTextI18n")
     override fun onCalendarSelect(calendar: Calendar?, isClick: Boolean) {
