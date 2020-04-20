@@ -7,7 +7,6 @@ import com.gang.notodo.calendar.ListActivity
 import com.gang.notodo.data.Task
 import com.gang.notodo.data.TaskDataSource
 import com.gang.notodo.data.TaskRepository
-import com.gang.notodo.util.AppExecutors
 import com.gang.notodo.util.loge
 import com.gang.notodo.util.startActivity
 import com.gang.notodo.util.toast
@@ -24,15 +23,15 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
         val buttonLogin: Button = findViewById(R.id.button_login)
         buttonLogin.setOnClickListener {
-            testDb()
             startActivity<ListActivity>()
+            testDb()
         }
     }
 
     private fun testDb() {
 
         TaskRepository.saveTask(Task("testTitle", "testDes"))
-
+        TaskRepository.refreshAll()
         TaskRepository.getTasks(object : TaskDataSource.LoadTasksCallback {
             override fun onDataNotAvailable() {
             }
