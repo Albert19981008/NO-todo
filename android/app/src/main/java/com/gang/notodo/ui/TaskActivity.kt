@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import com.gang.notodo.R
 import com.gang.notodo.util.CalendarUtil
+import com.gang.notodo.util.CalendarUtil.getSchemeCalendar
 import com.gang.notodo.util.loge
 import com.gang.notodo.util.setupActionBar
 import com.gang.notodo.util.toast
@@ -21,7 +22,7 @@ import java.util.*
 import kotlin.random.Random
 
 
-class ListActivity : AppCompatActivity(),
+class TaskActivity : AppCompatActivity(),
     CalendarView.OnCalendarSelectListener,
     CalendarView.OnCalendarLongClickListener,
     CalendarView.OnYearChangeListener,
@@ -124,24 +125,6 @@ class ListActivity : AppCompatActivity(),
         }
         return false
     }
-
-
-    private fun getSchemeCalendar(
-        year: Int,
-        month: Int,
-        day: Int,
-        color: Int,
-        text: String
-    ): Calendar {
-        val calendar = Calendar()
-        calendar.year = year
-        calendar.month = month
-        calendar.day = day
-        calendar.schemeColor = color //如果单独标记颜色、则会使用这个颜色
-        calendar.scheme = text
-        return calendar
-    }
-
 
     @SuppressLint("SetTextI18n")
     override fun onCalendarSelect(calendar: Calendar?, isClick: Boolean) {

@@ -1,6 +1,7 @@
 package com.gang.notodo.util
 
 import android.content.Context
+import com.haibin.calendarview.Calendar
 
 object CalendarUtil {
 
@@ -11,6 +12,22 @@ object CalendarUtil {
 
     fun getRandomColor(): Int {
         return allColor.random()
+    }
+
+    fun getSchemeCalendar(
+        year: Int,
+        month: Int,
+        day: Int,
+        color: Int,
+        text: String
+    ): Calendar {
+        val calendar = Calendar()
+        calendar.year = year
+        calendar.month = month
+        calendar.day = day
+        calendar.schemeColor = color //如果单独标记颜色、则会使用这个颜色
+        calendar.scheme = text
+        return calendar
     }
 
     /**

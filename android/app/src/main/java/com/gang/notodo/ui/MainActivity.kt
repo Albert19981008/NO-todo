@@ -3,7 +3,6 @@ package com.gang.notodo.ui
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import com.gang.notodo.R
 import com.gang.notodo.data.Task
 import com.gang.notodo.data.TaskDataSource
@@ -24,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
         val buttonLogin: Button = findViewById(R.id.button_login)
         buttonLogin.setOnClickListener {
-            startActivity<ListActivity>()
+            startActivity<TaskActivity>()
             testDb()
         }
 
