@@ -14,19 +14,25 @@ abstract class TaskDatabase : RoomDatabase() {
 
     companion object {
 
-        private var INSTANCE: TaskDatabase? = null
+        private var instance: TaskDatabase? = null
 
         private val LOCK = Any()
 
         fun getInstance(context: Context): TaskDatabase {
-            synchronized(LOCK) {
-                if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.applicationContext,
-                        TaskDatabase::class.java, "tasks.db")
-                        .build()
+            if (instance == null) {
+                synchronized(LOCK) {
+                    if (instance == null) {
+                        instance = Room.databaseBuilder(
+                            context.applicationContext,
+                            TaskDatabase::class.java,
+                            "tasks.db"
+                        )
+                            .build()
+                    }
+
                 }
-                return INSTANCE!!
             }
+            return instance!!
         }
     }
 
