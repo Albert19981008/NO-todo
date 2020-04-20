@@ -1,15 +1,15 @@
 package com.gang.notodo
 
 import android.app.Application
-import com.gang.notodo.data.local.TodoDatabase
+import com.gang.notodo.data.local.TaskDatabase
 
 
 class TodoApplication : Application() {
 
-    var todoDatabase: TodoDatabase? = null
+    var taskDatabase: TaskDatabase? = null
 
     private fun initDb() {
-        todoDatabase = TodoDatabase.getInstance(this)
+        taskDatabase = TaskDatabase.getInstance(this)
     }
 
     override fun onCreate() {

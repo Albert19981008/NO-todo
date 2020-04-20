@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
         val buttonLogin: Button = findViewById(R.id.button_login)
         buttonLogin.setOnClickListener {
-//            testDao()
+            testDao()
             startActivity<ListActivity>()
         }
     }
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     private fun testDao() {
         executors.diskIO.execute {
             val dao: TaskDao = TodoApplication.todoApplication
-                ?.todoDatabase
+                ?.taskDatabase
                 ?.taskDao()!!
             val task = Task("testTitle", "testDes")
             dao.insertTask(task)
