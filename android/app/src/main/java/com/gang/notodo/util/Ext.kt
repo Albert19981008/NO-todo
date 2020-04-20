@@ -5,6 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.IdRes
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 
 
 fun Any.loge(msg: String) {
@@ -22,4 +25,11 @@ inline fun <reified T : Activity> Context.startActivity() {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     }
     startActivity(intent)
+}
+
+fun AppCompatActivity.setupActionBar(@IdRes toolbarId: Int, action: ActionBar.() -> Unit) {
+    setSupportActionBar(findViewById(toolbarId))
+    supportActionBar?.run {
+        action()
+    }
 }

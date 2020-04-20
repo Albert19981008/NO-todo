@@ -9,13 +9,11 @@ import com.gang.notodo.data.Task
 import com.gang.notodo.data.TaskDataSource
 import com.gang.notodo.data.TaskRepository
 import com.gang.notodo.util.loge
+import com.gang.notodo.util.setupActionBar
 import com.gang.notodo.util.startActivity
 import com.gang.notodo.util.toast
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var mToolbar: Toolbar
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,9 +28,9 @@ class MainActivity : AppCompatActivity() {
             testDb()
         }
 
-        mToolbar = findViewById(R.id.toolBar)
-        mToolbar.title = "NO-todo"
-        setSupportActionBar(mToolbar)
+        setupActionBar(R.id.toolBar) {
+            title = "NO-todo"
+        }
     }
 
     private fun testDb() {
