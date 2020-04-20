@@ -25,8 +25,8 @@ object TaskRepository : TaskDataSource, TaskCache {
         when {
             loading -> blockedCallback.offer(callback)
             cacheIsDirty -> {
-                refreshAll()
                 blockedCallback.offer(callback)
+                refreshAll()
             }
             else -> // !cacheIsDirty && !loading
                 callback.onTasksLoaded(cachedTasks.values.toList())
@@ -81,7 +81,7 @@ object TaskRepository : TaskDataSource, TaskCache {
         }
     }
 
-    private fun notAvailable() {
+    private fun onNotAvailable() {
         loading = false
         while (!blockedCallback.isEmpty()) {
             blockedCallback.poll()?.onDataNotAvailable()
@@ -102,7 +102,7 @@ object TaskRepository : TaskDataSource, TaskCache {
             }
 
             override fun onDataNotAvailable() {
-                notAvailable()
+                onNotAvailable()
             }
         })
     }
