@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".calendar.ListActivity">
+    tools:context=".ui.ListActivity">
 
     <LinearLayout
         android:id="@+id/rl_tool"
@@ -85,8 +85,8 @@
                 app:scheme_text_color="#333"
                 app:selected_lunar_text_color="#CFCFCF"
                 app:scheme_theme_color="#128c4b"
-                app:month_view="com.gang.notodo.calendar.IndexMonthView"
-                app:week_view="com.gang.notodo.calendar.IndexWeekView"
+                app:month_view="com.gang.notodo.ui.calendar.IndexMonthView"
+                app:week_view="com.gang.notodo.ui.calendar.IndexWeekView"
                 app:selected_text_color="#333"
                 app:selected_theme_color="#80cfcfcf"
                 app:week_background="#fff"

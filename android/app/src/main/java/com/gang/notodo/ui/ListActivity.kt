@@ -1,4 +1,4 @@
-package com.gang.notodo.calendar
+package com.gang.notodo.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle

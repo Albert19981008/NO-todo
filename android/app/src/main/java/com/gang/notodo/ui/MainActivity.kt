@@ -1,9 +1,9 @@
-package com.gang.notodo
+package com.gang.notodo.ui
 
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.gang.notodo.calendar.ListActivity
+import com.gang.notodo.R
 import com.gang.notodo.data.Task
 import com.gang.notodo.data.TaskDataSource
 import com.gang.notodo.data.TaskRepository
