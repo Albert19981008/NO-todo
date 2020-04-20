@@ -41,7 +41,7 @@ interface TaskDao {
 
 
     @Query("delete from tasks")
-    fun deleteTasks()
+    fun deleteAllTasks()
 
 
     @Query("delete from tasks where completed = 1")
