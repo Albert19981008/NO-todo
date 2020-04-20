@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NO-todo</string>
+    <string name="login">LOGIN</string>
 </resources>
