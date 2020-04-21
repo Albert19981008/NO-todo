@@ -57,7 +57,7 @@ class AddTaskActivity : AppCompatActivity() {
         setupActionBar(R.id.toolBar) {
             setHomeAsUpIndicator(R.drawable.ic_menu)
             setDisplayHomeAsUpEnabled(true)
-            title = "NO-todo"
+            title = "新建"
         }
         mToolBar.setNavigationOnClickListener { v ->
             val popup = PopupMenu(this, v)

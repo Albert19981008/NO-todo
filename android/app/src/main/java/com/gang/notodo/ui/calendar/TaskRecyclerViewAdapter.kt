@@ -40,10 +40,8 @@ class TaskRecyclerViewAdapter(private val mContext: Context) :
         mDataList[position].let {
             holder.mDate.text = "" + it.year + "-" +  it.month + "-" + it.day
         }
-
-        holder.mRoot.setOnClickListener { it ->
-            mContext.toast(mDataList[position].toString())
-            // todo 打开内容页
+        holder.mRoot.setOnClickListener {
+            mContext.toast("详情: " + mDataList[position].description)
         }
     }
 
