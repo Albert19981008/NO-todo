@@ -10,6 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.Toolbar
 import com.gang.notodo.R
+import com.gang.notodo.data.Task
+import com.gang.notodo.data.TaskDataSource
+import com.gang.notodo.data.TaskRepository
 import com.gang.notodo.ui.ListActivity
 import com.gang.notodo.util.CalendarUtil
 import com.gang.notodo.util.CalendarUtil.calendarToTimeStamp
@@ -20,8 +23,6 @@ import com.gang.notodo.util.startActivity
 import com.gang.notodo.util.toast
 import com.haibin.calendarview.Calendar
 import com.haibin.calendarview.CalendarView
-import java.util.*
-import kotlin.random.Random
 
 
 class CalendarActivity : AppCompatActivity(),
@@ -44,7 +45,11 @@ class CalendarActivity : AppCompatActivity(),
 
     private lateinit var mRelativeTool: LinearLayout
 
+    private val dateWhichHasTasks = HashMap<String, Calendar>()
+
     private var mYear: Int = 0
+    private var mMonth: Int = 0
+    private var mDay: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,6 +77,8 @@ class CalendarActivity : AppCompatActivity(),
         mCalendarView.setOnCalendarLongClickListener(this, false)
         mTextYear.text = mCalendarView.curYear.toString()
         mYear = mCalendarView.curYear
+        mMonth = mCalendarView.curMonth
+        mDay = mCalendarView.curDay
         mTextMonthDay.text = mCalendarView.curMonth.toString() + "月" + mCalendarView.curDay + "日"
         mTextLunar.text = "今日"
 
@@ -100,23 +107,29 @@ class CalendarActivity : AppCompatActivity(),
     }
 
     private fun initData() {
-        randomInitData()
-    }
+        TaskRepository.getTasks(object : TaskDataSource.LoadTasksCallback {
 
-    private fun randomInitData() {
-        val year = mCalendarView.curYear
-        val month = mCalendarView.curMonth
-        val map = HashMap<String, Calendar>()
-
-        for (i in 1..28) {
-            if (Random.nextBoolean()) {
-                val c = getSchemeCalendar(year, month, i, CalendarUtil.getRandomColor(), "")
-                map[c.toString()] = c
+            override fun onTasksLoaded(tasks: List<Task>) {
+                dateWhichHasTasks.clear()
+                tasks.distinctBy { "" + it.year + "#" + it.month + "#" + it.day }
+                    .filter { it.isActive }
+                    .forEach {
+                        val c = getSchemeCalendar(
+                            it.year,
+                            it.month,
+                            it.day,
+                            CalendarUtil.getRandomColor()
+                        )
+                        dateWhichHasTasks[c.toString()] = c
+                    }
+                mCalendarView.setSchemeDate(dateWhichHasTasks)
             }
-        }
 
-        //此方法在巨大的数据量上不影响遍历性能，推荐使用
-        mCalendarView.setSchemeDate(map)
+            override fun onDataNotAvailable() {
+                // nothing
+            }
+
+        })
     }
 
     @SuppressLint("SetTextI18n")

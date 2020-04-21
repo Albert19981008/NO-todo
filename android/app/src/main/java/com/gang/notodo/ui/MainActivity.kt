@@ -34,9 +34,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun testDb() {
-
-        TaskRepository.saveTask(Task("testTitle", "testDes", 0))
-        TaskRepository.refreshAll()
+        TaskRepository.deleteAllTasks()
+        TaskRepository.saveTask(Task("testTitle", "testDes", 2020,4,13))
+        TaskRepository.saveTask(Task("testTitle", "testDes", 2020,4,23))
         TaskRepository.getTasks(object : TaskDataSource.LoadTasksCallback {
             override fun onDataNotAvailable() {
             }
@@ -47,6 +47,5 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-        TaskRepository.deleteAllTasks()
     }
 }
