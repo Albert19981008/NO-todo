@@ -56,9 +56,7 @@ class CalendarActivity : AppCompatActivity(),
 
     private val dateWhichHasTasks = HashMap<String, Calendar>()
 
-    private var mYear: Int = 0
-    private var mMonth: Int = 0
-    private var mDay: Int = 0
+    private val selectDate = MyDate()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +67,7 @@ class CalendarActivity : AppCompatActivity(),
 
     override fun onResume() {
         super.onResume()
-        reloadRecyclerView(getSchemeCalendar(mYear, mMonth, mDay, 0))
+        reloadRecyclerView(getSchemeCalendar(selectDate.year, selectDate.month, selectDate.day, 0))
     }
 
     @SuppressLint("SetTextI18n")
@@ -81,22 +79,24 @@ class CalendarActivity : AppCompatActivity(),
         mRelativeTool = findViewById(R.id.rl_tool)
         mCalendarView = findViewById(R.id.calendarView)
         mTextMonthDay.setOnClickListener {
-            mCalendarView.showYearSelectLayout(mYear)
-            mTextMonthDay.text = mYear.toString()
+            mCalendarView.showYearSelectLayout(selectDate.year)
+            mTextMonthDay.text = selectDate.year.toString()
         }
 
         mAddButton = findViewById(R.id.fab_edit_task_add)
         mAddButton.setOnClickListener {
-            startActivity(AddTaskActivity.getIntent(this, mYear, mMonth, mDay))
+            startActivity(
+                AddTaskActivity.getIntent(this, selectDate)
+            )
         }
 
         mCalendarView.setOnCalendarSelectListener(this)
         mCalendarView.setOnYearChangeListener(this)
         mCalendarView.setOnCalendarLongClickListener(this, false)
         mTextYear.text = mCalendarView.curYear.toString()
-        mYear = mCalendarView.curYear
-        mMonth = mCalendarView.curMonth
-        mDay = mCalendarView.curDay
+        selectDate.year = mCalendarView.curYear
+        selectDate.month = mCalendarView.curMonth
+        selectDate.day = mCalendarView.curDay
         mTextMonthDay.text = mCalendarView.curMonth.toString() + "月" + mCalendarView.curDay + "日"
         mTextLunar.text = "今日"
 
@@ -173,12 +173,12 @@ class CalendarActivity : AppCompatActivity(),
             mTextMonthDay.text = it.month.toString() + "月" + it.day + "日"
             mTextYear.text = it.year.toString()
             mTextLunar.text = it.lunar
-            mYear = it.year
+            selectDate.year = it.year
+            selectDate.month = it.month
+            selectDate.day = it.day
             reloadRecyclerView(it)
         }
     }
-
-
 
     private fun reloadRecyclerView(calendar: Calendar) {
 
@@ -189,21 +189,16 @@ class CalendarActivity : AppCompatActivity(),
                 override fun onTasksLoaded(tasks: List<Task>) {
                     mRecyclerViewAdapter.mDataList = tasks
                     mRecyclerViewAdapter.notifyDataSetChanged()
-                    moveToPosition(mRecyclerView.layoutManager as LinearLayoutManager,0)
+                    mRecyclerView.scrollToPosition(0)
                 }
 
                 override fun onDataNotAvailable() {
                     mRecyclerViewAdapter.mDataList = arrayListOf()
                     mRecyclerViewAdapter.notifyDataSetChanged()
-                    moveToPosition(mRecyclerView.layoutManager as LinearLayoutManager,0)
+                    mRecyclerView.scrollToPosition(0)
                 }
             })
 
-    }
-
-    fun moveToPosition(manager: LinearLayoutManager, n: Int) {
-        manager.scrollToPositionWithOffset(n, 0)
-        manager.stackFromEnd = true
     }
 
     override fun onCalendarOutOfRange(calendar: Calendar?) {
@@ -223,5 +218,11 @@ class CalendarActivity : AppCompatActivity(),
     override fun onYearChange(year: Int) {
         mTextMonthDay.text = year.toString()
     }
+
+    class MyDate @JvmOverloads constructor(
+        var year: Int = 0,
+        var month: Int = 0,
+        var day: Int = 0
+    )
 
 }

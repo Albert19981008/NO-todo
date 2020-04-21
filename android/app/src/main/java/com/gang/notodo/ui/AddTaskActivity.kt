@@ -3,20 +3,24 @@ package com.gang.notodo.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.Toolbar
 import com.gang.notodo.R
+import com.gang.notodo.data.Task
+import com.gang.notodo.data.TaskRepository
 import com.gang.notodo.ui.calendar.CalendarActivity
 import com.gang.notodo.util.setupActionBar
 import com.gang.notodo.util.startActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class AddTaskActivity : AppCompatActivity() {
 
-    private lateinit var title: EditText
-    private lateinit var description: EditText
+    private lateinit var title: TextView
+    private lateinit var description: TextView
     private lateinit var mToolBar: Toolbar
+    private lateinit var mAddButton: FloatingActionButton
     private var year: Int = 0
     private var month: Int = 0
     private var day: Int = 0
@@ -37,6 +41,12 @@ class AddTaskActivity : AppCompatActivity() {
     private fun initView() {
         title = findViewById(R.id.add_task_title)
         description = findViewById(R.id.add_task_description)
+
+        mAddButton = findViewById(R.id.fab_edit_task_done)
+        mAddButton.setOnClickListener {
+            doAddTaskAndFinish()
+        }
+
         mToolBar = findViewById(R.id.toolBar)
         initToolBar()
     }
@@ -62,17 +72,24 @@ class AddTaskActivity : AppCompatActivity() {
         }
     }
 
+    private fun doAddTaskAndFinish() {
+        val task = Task(title.text.toString(), description.text.toString(), year, month, day)
+        TaskRepository.saveTask(task)
+        startActivity<CalendarActivity>()
+        finish()
+    }
+
     companion object {
 
         const val YEAR = "year"
         const val MONTH = "month"
         const val DAY = "day"
 
-        fun getIntent(context: Context, year: Int, month: Int, day: Int): Intent =
+        fun getIntent(context: Context, date: CalendarActivity.MyDate): Intent =
             Intent(context, AddTaskActivity::class.java).apply {
-                putExtra(YEAR, year)
-                putExtra(MONTH, month)
-                putExtra(DAY, day)
+                putExtra(YEAR, date.year)
+                putExtra(MONTH, date.month)
+                putExtra(DAY, date.day)
             }
     }
 }
