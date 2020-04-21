@@ -12,7 +12,9 @@ import androidx.appcompat.widget.Toolbar
 import com.gang.notodo.R
 import com.gang.notodo.ui.ListActivity
 import com.gang.notodo.util.CalendarUtil
+import com.gang.notodo.util.CalendarUtil.calendarToTimeStamp
 import com.gang.notodo.util.CalendarUtil.getSchemeCalendar
+import com.gang.notodo.util.CalendarUtil.timeStampToCalendar
 import com.gang.notodo.util.setupActionBar
 import com.gang.notodo.util.startActivity
 import com.gang.notodo.util.toast
@@ -126,8 +128,11 @@ class CalendarActivity : AppCompatActivity(),
             mTextYear.text = it.year.toString()
             mTextLunar.text = it.lunar
             mYear = it.year
+            val testTimeStamp = calendarToTimeStamp(it)
+            val calendar2 = timeStampToCalendar(testTimeStamp)
+            toast("" + testTimeStamp + "\n" + calendar2.toString())
         }
-        toast(calendar.toString())
+//        toast(calendar.toString())
     }
 
     override fun onCalendarOutOfRange(calendar: Calendar?) {
@@ -140,7 +145,7 @@ class CalendarActivity : AppCompatActivity(),
 
     override fun onCalendarLongClick(calendar: Calendar?) {
         calendar?.let {
-            Log.e("onDateLongClick", "  -- " + it.day + "  --  " + it.month)
+            Log.e("onDateLongClick", "--" + it.day + "--" + it.month)
         }
     }
 

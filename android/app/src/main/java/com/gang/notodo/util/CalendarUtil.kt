@@ -30,6 +30,20 @@ object CalendarUtil {
         return calendar
     }
 
+    fun timeStampToCalendar(timeMillis: Long) : Calendar {
+        val javaUtilCalendar = java.util.Calendar.getInstance()
+        javaUtilCalendar.timeInMillis = timeMillis
+        return Calendar().apply {
+            this.year = javaUtilCalendar.get(java.util.Calendar.YEAR)
+            this.month = javaUtilCalendar.get(java.util.Calendar.MONTH) + 1
+            this.day = javaUtilCalendar.get(java.util.Calendar.DAY_OF_MONTH)
+        }
+    }
+
+    fun calendarToTimeStamp(calendar: Calendar) : Long{
+        return calendar.timeInMillis
+    }
+
     /**
      * dp转px
      *

@@ -17,6 +17,10 @@ data class Task @JvmOverloads constructor(
     @ColumnInfo(name = "description")
     var description: String = "",
 
+
+    @ColumnInfo(name = "time_stamp")
+    var stamp: Int,
+
     @PrimaryKey
     @ColumnInfo(name = "entryId")
     var id: String = UUID.randomUUID().toString()
