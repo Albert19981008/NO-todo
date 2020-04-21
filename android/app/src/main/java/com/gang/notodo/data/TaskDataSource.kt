@@ -19,6 +19,8 @@ interface TaskDataSource {
 
     fun getTasks(callback: LoadTasksCallback)
 
+    fun getTasksByDate(year: Int, month: Int, day: Int, callback: LoadTasksCallback)
+
     fun getTask(taskId: String, callback: GetTaskCallback)
 
     fun saveTask(task: Task)

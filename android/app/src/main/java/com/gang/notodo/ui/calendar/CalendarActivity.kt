@@ -130,7 +130,6 @@ class CalendarActivity : AppCompatActivity(),
             mYear = it.year
             val testTimeStamp = calendarToTimeStamp(it)
             val calendar2 = timeStampToCalendar(testTimeStamp)
-            toast("" + testTimeStamp + "\n" + calendar2.toString())
         }
 //        toast(calendar.toString())
     }

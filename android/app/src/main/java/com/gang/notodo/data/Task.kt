@@ -2,13 +2,14 @@ package com.gang.notodo.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.util.*
 
 /**
  * 任务实体类
  */
-@Entity(tableName = "tasks")
+@Entity(tableName = "tasks", indices = [Index(value = ["year", "month", "day"])])
 data class Task @JvmOverloads constructor(
 
     @ColumnInfo(name = "title")
@@ -17,9 +18,14 @@ data class Task @JvmOverloads constructor(
     @ColumnInfo(name = "description")
     var description: String = "",
 
+    @ColumnInfo(name = "year")
+    var year: Int = 0,
 
-    @ColumnInfo(name = "time_stamp")
-    var stamp: Int,
+    @ColumnInfo(name = "month")
+    var month: Int = 0,
+
+    @ColumnInfo(name = "day")
+    var day: Int = 0,
 
     @PrimaryKey
     @ColumnInfo(name = "entryId")

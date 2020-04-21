@@ -33,6 +33,25 @@ object TaskRepository : TaskDataSource, TaskCache {
         }
     }
 
+    override fun getTasksByDate(
+        year: Int,
+        month: Int,
+        day: Int,
+        callback: TaskDataSource.LoadTasksCallback
+    ) {
+        if (!cacheIsDirty && !loading) {
+            val task =
+                cachedTasks.values.filter { it.year == year && it.month == month && it.day == day }
+            if (task.isEmpty()) {
+                callback.onTasksLoaded(task)
+            } else {
+                callback.onDataNotAvailable()
+            }
+        } else {
+            local.getTasksByDate(year, month, day, callback)
+        }
+    }
+
     override fun getTask(taskId: String, callback: TaskDataSource.GetTaskCallback) {
         if (!cacheIsDirty && !loading) {
             val task = cachedTasks[taskId]
