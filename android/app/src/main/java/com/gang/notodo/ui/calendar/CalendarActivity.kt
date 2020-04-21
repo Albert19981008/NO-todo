@@ -18,9 +18,7 @@ import com.gang.notodo.data.TaskDataSource
 import com.gang.notodo.data.TaskRepository
 import com.gang.notodo.ui.ListActivity
 import com.gang.notodo.util.CalendarUtil
-import com.gang.notodo.util.CalendarUtil.calendarToTimeStamp
 import com.gang.notodo.util.CalendarUtil.getSchemeCalendar
-import com.gang.notodo.util.CalendarUtil.timeStampToCalendar
 import com.gang.notodo.util.setupActionBar
 import com.gang.notodo.util.startActivity
 import com.gang.notodo.util.toast
@@ -125,6 +123,8 @@ class CalendarActivity : AppCompatActivity(),
 
         mRecyclerViewAdapter = TaskRecyclerViewAdapter(this)
         mRecyclerView.adapter = mRecyclerViewAdapter
+
+        reloadRecyclerView(getSchemeCalendar(mYear, mMonth, mDay, 0))
     }
 
     private fun initData() {
