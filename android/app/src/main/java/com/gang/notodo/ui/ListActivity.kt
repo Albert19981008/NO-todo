@@ -39,11 +39,11 @@ class ListActivity : AppCompatActivity() {
 
     private fun initView() {
         mRootView = findViewById(R.id.root)
-//        mToolBar = findViewById(R.id.toolBar)
+        mToolBar = findViewById(R.id.toolBar)
         mTabLayout = findViewById(R.id.tabs)
         mViewPager = findViewById(R.id.view_pager)
 
-//        initToolBar()
+        initToolBar()
         initFragmentList()
         initViewPager()
         initTab()
