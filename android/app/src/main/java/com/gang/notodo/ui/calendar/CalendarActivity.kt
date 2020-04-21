@@ -114,13 +114,15 @@ class CalendarActivity : AppCompatActivity(),
                 tasks.distinctBy { "" + it.year + "#" + it.month + "#" + it.day }
                     .filter { it.isActive }
                     .forEach {
-                        val c = getSchemeCalendar(
+                        getSchemeCalendar(
                             it.year,
                             it.month,
                             it.day,
                             CalendarUtil.getRandomColor()
-                        )
-                        dateWhichHasTasks[c.toString()] = c
+                        ).let { it2 ->
+                            dateWhichHasTasks[it2.toString()] = it2
+                        }
+
                     }
                 mCalendarView.setSchemeDate(dateWhichHasTasks)
             }

@@ -36,7 +36,8 @@ class MainActivity : AppCompatActivity() {
     private fun testDb() {
         TaskRepository.deleteAllTasks()
         TaskRepository.saveTask(Task("testTitle", "testDes", 2020,4,13))
-        TaskRepository.saveTask(Task("testTitle", "testDes", 2020,4,23))
+        TaskRepository.saveTask(Task("testTitle", "testDes", 2020,4,26))
+        TaskRepository.saveTask(Task("testTitle", "testDes", 2020,5,11))
         TaskRepository.getTasks(object : TaskDataSource.LoadTasksCallback {
             override fun onDataNotAvailable() {
             }
