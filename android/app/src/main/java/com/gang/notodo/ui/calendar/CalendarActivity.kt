@@ -16,14 +16,21 @@ import com.gang.notodo.R
 import com.gang.notodo.data.Task
 import com.gang.notodo.data.TaskDataSource
 import com.gang.notodo.data.TaskRepository
+import com.gang.notodo.ui.AddTaskActivity
 import com.gang.notodo.ui.ListActivity
 import com.gang.notodo.util.CalendarUtil
 import com.gang.notodo.util.CalendarUtil.getSchemeCalendar
 import com.gang.notodo.util.setupActionBar
 import com.gang.notodo.util.startActivity
 import com.gang.notodo.util.toast
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.haibin.calendarview.Calendar
 import com.haibin.calendarview.CalendarView
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 
 class CalendarActivity : AppCompatActivity(),
@@ -44,6 +51,8 @@ class CalendarActivity : AppCompatActivity(),
 
     private lateinit var mCalendarView: CalendarView
 
+    private lateinit var mAddButton: FloatingActionButton
+
     private lateinit var mRelativeTool: LinearLayout
 
     private lateinit var mRecyclerView: RecyclerView
@@ -63,6 +72,11 @@ class CalendarActivity : AppCompatActivity(),
         initData()
     }
 
+    override fun onResume() {
+        super.onResume()
+        reloadRecyclerView(getSchemeCalendar(mYear, mMonth, mDay, 0))
+    }
+
     @SuppressLint("SetTextI18n")
     private fun initView() {
         mRootView = findViewById(R.id.root)
@@ -74,6 +88,11 @@ class CalendarActivity : AppCompatActivity(),
         mTextMonthDay.setOnClickListener {
             mCalendarView.showYearSelectLayout(mYear)
             mTextMonthDay.text = mYear.toString()
+        }
+
+        mAddButton = findViewById(R.id.fab_edit_task_add)
+        mAddButton.setOnClickListener {
+            startActivity(AddTaskActivity.getIntent(this, mYear, mMonth, mDay))
         }
 
         mCalendarView.setOnCalendarSelectListener(this)
@@ -123,8 +142,6 @@ class CalendarActivity : AppCompatActivity(),
 
         mRecyclerViewAdapter = TaskRecyclerViewAdapter(this)
         mRecyclerView.adapter = mRecyclerViewAdapter
-
-        reloadRecyclerView(getSchemeCalendar(mYear, mMonth, mDay, 0))
     }
 
     private fun initData() {
@@ -166,6 +183,8 @@ class CalendarActivity : AppCompatActivity(),
         }
     }
 
+
+
     private fun reloadRecyclerView(calendar: Calendar) {
 
         TaskRepository.getTasksByDate(calendar.year, calendar.month, calendar.day,
@@ -175,14 +194,21 @@ class CalendarActivity : AppCompatActivity(),
                 override fun onTasksLoaded(tasks: List<Task>) {
                     mRecyclerViewAdapter.mDataList = tasks
                     mRecyclerViewAdapter.notifyDataSetChanged()
+                    MoveToPosition(mRecyclerView.layoutManager as LinearLayoutManager,0)
                 }
 
                 override fun onDataNotAvailable() {
                     mRecyclerViewAdapter.mDataList = arrayListOf()
                     mRecyclerViewAdapter.notifyDataSetChanged()
+                    MoveToPosition(mRecyclerView.layoutManager as LinearLayoutManager,0)
                 }
             })
 
+    }
+
+    fun MoveToPosition(manager: LinearLayoutManager, n: Int) {
+        manager.scrollToPositionWithOffset(n, 0)
+        manager.stackFromEnd = true
     }
 
     override fun onCalendarOutOfRange(calendar: Calendar?) {

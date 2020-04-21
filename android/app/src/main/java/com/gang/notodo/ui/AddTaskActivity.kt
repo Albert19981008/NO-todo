@@ -29,8 +29,8 @@ class AddTaskActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        title = findViewById(R.id.add_task_title)
-        description = findViewById(R.id.add_task_description)
+//        title = findViewById(R.id.add_task_title)
+//        description = findViewById(R.id.add_task_description)
     }
 
     companion object {
