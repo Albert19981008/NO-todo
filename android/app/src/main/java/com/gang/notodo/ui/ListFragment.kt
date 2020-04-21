@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gang.notodo.R
 import com.gang.notodo.data.Task
 
+
 class ListFragment(contentLayoutId: Int) : Fragment(contentLayoutId) {
 
     private var mView: View? = null

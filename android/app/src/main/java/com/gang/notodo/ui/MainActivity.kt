@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         buttonLogin.setOnClickListener {
             startActivity<CalendarActivity>()
             testDb()
+            finish()
         }
 
         setupActionBar(R.id.toolBar) {
