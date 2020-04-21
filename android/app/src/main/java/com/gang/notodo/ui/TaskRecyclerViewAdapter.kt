@@ -39,7 +39,7 @@ class TaskRecyclerViewAdapter(private val mContext: Context) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.mTitle.text = mDataList[position].title
         mDataList[position].let {
-            holder.mDate.text = "" + it.year + "-" +  it.month + "-" + it.day
+            holder.mDate.text = "" + it.year + "-" + it.month + "-" + it.day
         }
         holder.mRoot.setOnClickListener {
             mContext.toast("详情: " + mDataList[position].description)
@@ -71,7 +71,6 @@ class TaskRecyclerViewAdapter(private val mContext: Context) :
         }
 
     }
-
 
 
     /**

@@ -28,7 +28,7 @@ object CalendarUtil {
         return calendar
     }
 
-    fun timeStampToCalendar(timeMillis: Long) : Calendar {
+    fun timeStampToCalendar(timeMillis: Long): Calendar {
         val javaUtilCalendar = java.util.Calendar.getInstance()
         javaUtilCalendar.timeInMillis = timeMillis
         return Calendar().apply {
@@ -38,7 +38,7 @@ object CalendarUtil {
         }
     }
 
-    fun calendarToTimeStamp(calendar: Calendar) : Long{
+    fun calendarToTimeStamp(calendar: Calendar): Long {
         return calendar.timeInMillis
     }
 

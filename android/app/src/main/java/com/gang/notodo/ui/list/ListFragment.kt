@@ -39,8 +39,9 @@ class ListFragment(contentLayoutId: Int, active: Boolean) : Fragment(contentLayo
             mView = inflater.inflate(R.layout.fragment_list, null)
             initRecyclerView()
             doRefresh()
+
             TaskRepository.addOnRefreshCallBack(
-                object : OnRefreshCallBack{
+                object : OnRefreshCallBack {
                     override fun onRefresh() {
                         doRefresh()
                     }
