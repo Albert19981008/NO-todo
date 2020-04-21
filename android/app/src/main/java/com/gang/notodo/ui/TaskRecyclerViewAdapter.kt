@@ -7,11 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
-
 import com.gang.notodo.R
 import com.gang.notodo.data.Task
+import com.gang.notodo.data.TaskRepository
 import com.gang.notodo.util.toast
 
 
@@ -38,11 +39,37 @@ class TaskRecyclerViewAdapter(private val mContext: Context) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.mTitle.text = mDataList[position].title
         mDataList[position].let {
-            holder.mDate.text = "" + it.year + "-" +  it.month + "-" + it.day
+            holder.mDate.text = "" + it.year + "-" + it.month + "-" + it.day
         }
         holder.mRoot.setOnClickListener {
             mContext.toast("详情: " + mDataList[position].description)
         }
+
+        if (mDataList[position].isActive) {
+            holder.mRoot.setOnLongClickListener { view ->
+
+                val popup = PopupMenu(mContext, view)
+                val inflater = popup.menuInflater
+                inflater.inflate(R.menu.menu_list_item, popup.menu)
+                popup.setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.item_delete -> {
+                            val toDelete = mDataList[position]
+                            mDataList = mDataList.filter {
+                                it.id != toDelete.id
+                            }
+                            notifyDataSetChanged()
+                            TaskRepository.completeTask(toDelete.id)
+                        }
+                    }
+                    false
+                }
+                popup.show()
+
+                true
+            }
+        }
+
     }
 
 

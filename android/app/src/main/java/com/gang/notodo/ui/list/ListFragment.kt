@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gang.notodo.R
+import com.gang.notodo.data.OnRefreshCallBack
 import com.gang.notodo.data.Task
 import com.gang.notodo.data.TaskDataSource
 import com.gang.notodo.data.TaskRepository
@@ -37,13 +38,22 @@ class ListFragment(contentLayoutId: Int, active: Boolean) : Fragment(contentLayo
         if (mView == null) {
             mView = inflater.inflate(R.layout.fragment_list, null)
             initRecyclerView()
+            doRefresh()
+
+            TaskRepository.addOnRefreshCallBack(
+                object : OnRefreshCallBack {
+                    override fun onRefresh() {
+                        doRefresh()
+                    }
+                }
+            )
         }
+
         return mView
     }
 
-    override fun onResume() {
-        super.onResume()
 
+    private fun doRefresh() {
         TaskRepository.getTasks(object : TaskDataSource.LoadTasksCallback {
             override fun onDataNotAvailable() {
             }
@@ -61,7 +71,6 @@ class ListFragment(contentLayoutId: Int, active: Boolean) : Fragment(contentLayo
             }
 
         })
-
     }
 
     private fun initRecyclerView() {
