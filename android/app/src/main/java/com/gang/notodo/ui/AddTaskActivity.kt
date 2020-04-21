@@ -13,7 +13,9 @@ import com.gang.notodo.data.TaskRepository
 import com.gang.notodo.ui.calendar.CalendarActivity
 import com.gang.notodo.util.setupActionBar
 import com.gang.notodo.util.startActivity
+import com.gang.notodo.util.toast
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+
 
 class AddTaskActivity : AppCompatActivity() {
 
@@ -73,6 +75,10 @@ class AddTaskActivity : AppCompatActivity() {
     }
 
     private fun doAddTaskAndFinish() {
+        if (title.text.isBlank()) {
+            toast("请不要使用空标题")
+            return
+        }
         val task = Task(title.text.toString(), description.text.toString(), year, month, day)
         TaskRepository.saveTask(task)
         startActivity<CalendarActivity>()
