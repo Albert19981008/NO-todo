@@ -62,11 +62,11 @@ class CalendarActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calendar)
         initView()
-        initData()
     }
 
     override fun onResume() {
         super.onResume()
+        initData()
         reloadRecyclerView(getSchemeCalendar(selectDate.year, selectDate.month, selectDate.day, 0))
     }
 
@@ -109,7 +109,7 @@ class CalendarActivity : AppCompatActivity(),
         setupActionBar(R.id.toolBar) {
             setHomeAsUpIndicator(R.drawable.ic_menu)
             setDisplayHomeAsUpEnabled(true)
-            title = "NO-todo"
+            title = "日历"
         }
         mToolBar.setNavigationOnClickListener { v ->
             val popup = PopupMenu(this, v)

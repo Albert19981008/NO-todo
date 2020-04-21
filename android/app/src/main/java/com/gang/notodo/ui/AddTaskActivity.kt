@@ -13,7 +13,9 @@ import com.gang.notodo.data.TaskRepository
 import com.gang.notodo.ui.calendar.CalendarActivity
 import com.gang.notodo.util.setupActionBar
 import com.gang.notodo.util.startActivity
+import com.gang.notodo.util.toast
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+
 
 class AddTaskActivity : AppCompatActivity() {
 
@@ -55,7 +57,7 @@ class AddTaskActivity : AppCompatActivity() {
         setupActionBar(R.id.toolBar) {
             setHomeAsUpIndicator(R.drawable.ic_menu)
             setDisplayHomeAsUpEnabled(true)
-            title = "NO-todo"
+            title = "新建"
         }
         mToolBar.setNavigationOnClickListener { v ->
             val popup = PopupMenu(this, v)
@@ -73,6 +75,10 @@ class AddTaskActivity : AppCompatActivity() {
     }
 
     private fun doAddTaskAndFinish() {
+        if (title.text.isBlank()) {
+            toast("请不要使用空标题")
+            return
+        }
         val task = Task(title.text.toString(), description.text.toString(), year, month, day)
         TaskRepository.saveTask(task)
         startActivity<CalendarActivity>()

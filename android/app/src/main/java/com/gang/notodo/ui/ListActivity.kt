@@ -32,7 +32,7 @@ class ListActivity : AppCompatActivity() {
         setupActionBar(R.id.toolBar) {
             setHomeAsUpIndicator(R.drawable.ic_menu)
             setDisplayHomeAsUpEnabled(true)
-            title = "NO-todo"
+            title = "todo-list"
         }
         mToolBar.setNavigationOnClickListener { v ->
             val popup = PopupMenu(this, v)
