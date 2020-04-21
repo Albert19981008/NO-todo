@@ -1,4 +1,4 @@
-package com.gang.notodo.ui
+package com.gang.notodo.ui.list
 
 import android.os.Bundle
 import android.view.View
@@ -91,7 +91,8 @@ class ListActivity : AppCompatActivity() {
             mFragmentList.add(fragment)
         }
         //设置适配器
-        mViewPagerFragmentAdapter = ViewPagerFragmentAdapter(mFragmentManager, mFragmentList)
+        mViewPagerFragmentAdapter =
+            ViewPagerFragmentAdapter(mFragmentManager, mFragmentList)
     }
 
 

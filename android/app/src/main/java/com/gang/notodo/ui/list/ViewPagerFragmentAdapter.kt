@@ -1,4 +1,4 @@
-package com.gang.notodo.ui
+package com.gang.notodo.ui.list
 
 
 import androidx.fragment.app.Fragment

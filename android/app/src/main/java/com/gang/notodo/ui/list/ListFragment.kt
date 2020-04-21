@@ -1,4 +1,4 @@
-package com.gang.notodo.ui
+package com.gang.notodo.ui.list
 
 import android.content.Context
 import android.os.Bundle
@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gang.notodo.R
 import com.gang.notodo.data.Task
+import com.gang.notodo.ui.TaskRecyclerViewAdapter
 
 
 class ListFragment(contentLayoutId: Int) : Fragment(contentLayoutId) {
