@@ -1,24 +1,18 @@
 package com.gang.notodo
 
 import android.app.Application
-import com.gang.notodo.data.local.TodoDatabase
+import com.gang.notodo.data.TaskRepository
 
 
 class TodoApplication : Application() {
 
-    var todoDatabase: TodoDatabase? = null
-
-    private fun initDb() {
-        todoDatabase = TodoDatabase.getInstance(this)
-    }
-
     override fun onCreate() {
         super.onCreate()
-        todoApplication = this
-        initDb()
+        instance = this
+        TaskRepository.refreshAll()
     }
 
     companion object {
-        var todoApplication: TodoApplication? = null
+        var instance: TodoApplication? = null
     }
 }

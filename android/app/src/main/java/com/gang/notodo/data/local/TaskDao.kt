@@ -9,6 +9,9 @@ interface TaskDao {
     @Query("select * from tasks")
     fun getAllTasks(): List<Task>
 
+    @Query("select * from tasks where year = :year and month = :month and day = :day")
+    fun getTasksByDate(year: Int, month: Int, day: Int): List<Task>
+
     /**
      * 通过 id 查找任务
      */
@@ -41,7 +44,7 @@ interface TaskDao {
 
 
     @Query("delete from tasks")
-    fun deleteTasks()
+    fun deleteAllTasks()
 
 
     @Query("delete from tasks where completed = 1")
