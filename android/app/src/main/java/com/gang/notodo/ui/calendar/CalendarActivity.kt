@@ -26,11 +26,6 @@ import com.gang.notodo.util.toast
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.haibin.calendarview.Calendar
 import com.haibin.calendarview.CalendarView
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
-
 
 
 class CalendarActivity : AppCompatActivity(),
@@ -194,19 +189,19 @@ class CalendarActivity : AppCompatActivity(),
                 override fun onTasksLoaded(tasks: List<Task>) {
                     mRecyclerViewAdapter.mDataList = tasks
                     mRecyclerViewAdapter.notifyDataSetChanged()
-                    MoveToPosition(mRecyclerView.layoutManager as LinearLayoutManager,0)
+                    moveToPosition(mRecyclerView.layoutManager as LinearLayoutManager,0)
                 }
 
                 override fun onDataNotAvailable() {
                     mRecyclerViewAdapter.mDataList = arrayListOf()
                     mRecyclerViewAdapter.notifyDataSetChanged()
-                    MoveToPosition(mRecyclerView.layoutManager as LinearLayoutManager,0)
+                    moveToPosition(mRecyclerView.layoutManager as LinearLayoutManager,0)
                 }
             })
 
     }
 
-    fun MoveToPosition(manager: LinearLayoutManager, n: Int) {
+    fun moveToPosition(manager: LinearLayoutManager, n: Int) {
         manager.scrollToPositionWithOffset(n, 0)
         manager.stackFromEnd = true
     }
