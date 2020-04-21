@@ -11,6 +11,7 @@ import com.gang.notodo.R
 import com.gang.notodo.data.Task
 import com.gang.notodo.data.TaskRepository
 import com.gang.notodo.ui.calendar.CalendarActivity
+import com.gang.notodo.ui.list.ListActivity
 import com.gang.notodo.util.setupActionBar
 import com.gang.notodo.util.startActivity
 import com.gang.notodo.util.toast

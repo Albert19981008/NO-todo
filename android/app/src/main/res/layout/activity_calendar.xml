@@ -35,7 +35,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:paddingStart="16dp"
-                android:text="4月xx日"
+                android:text="x月xx日"
                 android:textColor="#000000"
                 android:textSize="26sp"
                 android:textStyle="bold"
