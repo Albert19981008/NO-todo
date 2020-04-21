@@ -14,22 +14,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <activity android:name=".ui.AddTaskActivity"></activity>
         <activity
             android:name=".ui.ListActivity"
-            android:theme="@style/AppTheme"
-            android:launchMode="singleInstance"/>
-
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.calendar.CalendarActivity"
-            android:theme="@style/AppTheme"
-            android:launchMode="singleInstance"/>
-
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.MainActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
