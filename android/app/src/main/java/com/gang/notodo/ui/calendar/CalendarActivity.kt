@@ -9,6 +9,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.gang.notodo.R
 import com.gang.notodo.data.Task
 import com.gang.notodo.data.TaskDataSource
@@ -45,6 +48,10 @@ class CalendarActivity : AppCompatActivity(),
 
     private lateinit var mRelativeTool: LinearLayout
 
+    private lateinit var mRecyclerView: RecyclerView
+
+    private lateinit var mRecyclerViewAdapter: TaskRecyclerViewAdapter
+
     private val dateWhichHasTasks = HashMap<String, Calendar>()
 
     private var mYear: Int = 0
@@ -60,7 +67,6 @@ class CalendarActivity : AppCompatActivity(),
 
     @SuppressLint("SetTextI18n")
     private fun initView() {
-        mToolBar = findViewById(R.id.toolBar)
         mRootView = findViewById(R.id.root)
         mTextMonthDay = findViewById(R.id.tv_month_day)
         mTextYear = findViewById(R.id.tv_year)
@@ -83,9 +89,11 @@ class CalendarActivity : AppCompatActivity(),
         mTextLunar.text = "今日"
 
         initToolBar()
+        initRecyclerView()
     }
 
     private fun initToolBar() {
+        mToolBar = findViewById(R.id.toolBar)
         setupActionBar(R.id.toolBar) {
             setHomeAsUpIndicator(R.drawable.ic_menu)
             setDisplayHomeAsUpEnabled(true)
@@ -104,6 +112,19 @@ class CalendarActivity : AppCompatActivity(),
                 false
             }
         }
+    }
+
+    private fun initRecyclerView() {
+        mRecyclerView = findViewById(R.id.calendar_recycler)
+        mRecyclerView.layoutManager = LinearLayoutManager(this)
+
+        //设置分割线
+        mRecyclerView.addItemDecoration(
+            DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        )
+
+        mRecyclerViewAdapter = TaskRecyclerViewAdapter(this)
+        mRecyclerView.adapter = mRecyclerViewAdapter
     }
 
     private fun initData() {
@@ -136,8 +157,6 @@ class CalendarActivity : AppCompatActivity(),
 
     @SuppressLint("SetTextI18n")
     override fun onCalendarSelect(calendar: Calendar?, isClick: Boolean) {
-        mTextLunar.visibility = View.VISIBLE
-        mTextYear.visibility = View.VISIBLE
         calendar?.let {
             mTextMonthDay.text = it.month.toString() + "月" + it.day + "日"
             mTextYear.text = it.year.toString()
@@ -145,8 +164,28 @@ class CalendarActivity : AppCompatActivity(),
             mYear = it.year
             val testTimeStamp = calendarToTimeStamp(it)
             val calendar2 = timeStampToCalendar(testTimeStamp)
+            reloadRecyclerView(it)
+
         }
-//        toast(calendar.toString())
+    }
+
+    private fun reloadRecyclerView(calendar: Calendar) {
+
+        TaskRepository.getTasksByDate(calendar.year, calendar.month, calendar.day,
+
+            object : TaskDataSource.LoadTasksCallback {
+
+                override fun onTasksLoaded(tasks: List<Task>) {
+                    mRecyclerViewAdapter.setmDataList(tasks)
+                    mRecyclerViewAdapter.notifyDataSetChanged()
+                }
+
+                override fun onDataNotAvailable() {
+                    mRecyclerViewAdapter.setmDataList(arrayListOf())
+                    mRecyclerViewAdapter.notifyDataSetChanged()
+                }
+            })
+
     }
 
     override fun onCalendarOutOfRange(calendar: Calendar?) {

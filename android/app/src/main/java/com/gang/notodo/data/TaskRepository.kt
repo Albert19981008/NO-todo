@@ -42,7 +42,7 @@ object TaskRepository : TaskDataSource, TaskCache {
         if (!cacheIsDirty && !loading) {
             val task =
                 cachedTasks.values.filter { it.year == year && it.month == month && it.day == day }
-            if (task.isEmpty()) {
+            if (task.isNotEmpty()) {
                 callback.onTasksLoaded(task)
             } else {
                 callback.onDataNotAvailable()
