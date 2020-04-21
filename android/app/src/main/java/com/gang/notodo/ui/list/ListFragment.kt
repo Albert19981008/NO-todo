@@ -11,13 +11,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gang.notodo.R
 import com.gang.notodo.data.Task
+import com.gang.notodo.data.TaskDataSource
+import com.gang.notodo.data.TaskRepository
 import com.gang.notodo.ui.TaskRecyclerViewAdapter
 
 
-class ListFragment(contentLayoutId: Int) : Fragment(contentLayoutId) {
+class ListFragment(contentLayoutId: Int, active: Boolean) : Fragment(contentLayoutId) {
 
     private var mView: View? = null
     private lateinit var mContext: Context
+    private var mActive = active // 是否是活动的列表
 
     // RecyclerView
     private lateinit var mRecyclerView: RecyclerView
@@ -36,6 +39,29 @@ class ListFragment(contentLayoutId: Int) : Fragment(contentLayoutId) {
             initRecyclerView()
         }
         return mView
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        TaskRepository.getTasks(object : TaskDataSource.LoadTasksCallback {
+            override fun onDataNotAvailable() {
+            }
+
+            override fun onTasksLoaded(tasks: List<Task>) {
+                if (mActive) {
+                    setDataAndRefresh(tasks.filter {
+                        it.isActive
+                    })
+                } else {
+                    setDataAndRefresh(tasks.filter {
+                        it.isCompleted
+                    })
+                }
+            }
+
+        })
+
     }
 
     private fun initRecyclerView() {

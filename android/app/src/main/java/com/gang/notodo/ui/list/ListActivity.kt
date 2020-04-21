@@ -46,7 +46,7 @@ class ListActivity : AppCompatActivity() {
         initToolBar()
         initFragmentList()
         initViewPager()
-        initTab()
+        bindTabAndPager()
     }
 
     private fun initToolBar() {
@@ -83,12 +83,13 @@ class ListActivity : AppCompatActivity() {
      * 初始化Fragment（页）的列表，初始化并适配每页的Presenter,View 和 ViewPagerFragmentAdapter
      */
     private fun initFragmentList() {
-
+        var active = true
         for (i in 0..1) {
             //初始化每个页面
-            val fragment = ListFragment(R.layout.fragment_list)
+            val fragment = ListFragment(R.layout.fragment_list, active)
             fragment.setContext(this)
             mFragmentList.add(fragment)
+            active = !active
         }
         //设置适配器
         mViewPagerFragmentAdapter =
@@ -96,28 +97,8 @@ class ListActivity : AppCompatActivity() {
     }
 
 
-    /**
-     * 初始化导航栏
-     */
-    private fun initTab() {
+    private fun bindTabAndPager() {
         mTabLayout.setupWithViewPager(mViewPager)
-
-//        mTabLayout.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
-//
-//            override fun onTabSelected(tab: TabLayout.Tab) {
-//                val position = tab.position
-//                mViewPager.currentItem = position
-//            }
-//
-//            override fun onTabUnselected(tab: TabLayout.Tab?) {
-//                // nothing
-//            }
-//
-//            override fun onTabReselected(tab: TabLayout.Tab?) {
-//                // nothing
-//            }
-//        })
-//        mViewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(mTabLayout))
     }
 
 }
