@@ -21,7 +21,7 @@
             android:launchMode="singleInstance"/>
 
         <activity
-            android:name=".ui.TaskActivity"
+            android:name=".ui.CalendarActivity"
             android:theme="@style/AppTheme"
             android:launchMode="singleInstance"/>
 

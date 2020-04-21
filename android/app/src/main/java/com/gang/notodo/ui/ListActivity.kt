@@ -11,7 +11,7 @@ import com.gang.notodo.util.setupActionBar
 import com.gang.notodo.util.startActivity
 import com.gang.notodo.util.toast
 
-class ListActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
+class ListActivity : AppCompatActivity() {
 
     private lateinit var mRootView: View
     private lateinit var mToolBar: Toolbar
@@ -25,31 +25,28 @@ class ListActivity : AppCompatActivity(), PopupMenu.OnMenuItemClickListener {
     private fun initView() {
         mRootView = findViewById(R.id.root)
         mToolBar = findViewById(R.id.toolBar)
+        initToolBar()
+    }
+
+    private fun initToolBar() {
         setupActionBar(R.id.toolBar) {
             setHomeAsUpIndicator(R.drawable.ic_menu)
             setDisplayHomeAsUpEnabled(true)
             title = "NO-todo"
         }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            val popup = PopupMenu(this, mToolBar)
+        mToolBar.setNavigationOnClickListener { v ->
+            val popup = PopupMenu(this, v)
             val inflater = popup.menuInflater
             inflater.inflate(R.menu.menu_indicator, popup.menu)
-            popup.setOnMenuItemClickListener(this)
             popup.show()
-            return true
+            popup.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.item_calendar -> startActivity<CalendarActivity>()
+                    R.id.item_todo -> toast("已经是列表页")
+                }
+                false
+            }
         }
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onMenuItemClick(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.item_calendar -> startActivity<TaskActivity>()
-            R.id.item_todo -> toast("已经是列表页")
-        }
-        return false
     }
 
 }

@@ -3,7 +3,6 @@ package com.gang.notodo.ui
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -22,11 +21,10 @@ import java.util.*
 import kotlin.random.Random
 
 
-class TaskActivity : AppCompatActivity(),
+class CalendarActivity : AppCompatActivity(),
     CalendarView.OnCalendarSelectListener,
     CalendarView.OnCalendarLongClickListener,
-    CalendarView.OnYearChangeListener,
-    PopupMenu.OnMenuItemClickListener {
+    CalendarView.OnYearChangeListener {
 
 
     private lateinit var mRootView: View
@@ -74,10 +72,27 @@ class TaskActivity : AppCompatActivity(),
         mTextMonthDay.text = mCalendarView.curMonth.toString() + "月" + mCalendarView.curDay + "日"
         mTextLunar.text = "今日"
 
+        initToolBar()
+    }
+
+    private fun initToolBar() {
         setupActionBar(R.id.toolBar) {
             setHomeAsUpIndicator(R.drawable.ic_menu)
             setDisplayHomeAsUpEnabled(true)
             title = "NO-todo"
+        }
+        mToolBar.setNavigationOnClickListener { v ->
+            val popup = PopupMenu(this, v)
+            val inflater = popup.menuInflater
+            inflater.inflate(R.menu.menu_indicator, popup.menu)
+            popup.show()
+            popup.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.item_todo -> startActivity<ListActivity>()
+                    R.id.item_calendar -> toast("已经是日历页")
+                }
+                false
+            }
         }
     }
 
@@ -100,31 +115,6 @@ class TaskActivity : AppCompatActivity(),
         //此方法在巨大的数据量上不影响遍历性能，推荐使用
         mCalendarView.setSchemeDate(map)
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            val popup = PopupMenu(this, mToolBar)
-            val inflater = popup.menuInflater
-            inflater.inflate(R.menu.menu_indicator, popup.menu)
-            popup.setOnMenuItemClickListener(this)
-            popup.show()
-
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    /**
-     * 导航菜单弹出回调
-     */
-    override fun onMenuItemClick(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.item_todo -> startActivity<ListActivity>()
-            R.id.item_calendar -> toast("已经是日历页")
-        }
-        return false
-    }
-
 
     @SuppressLint("SetTextI18n")
     override fun onCalendarSelect(calendar: Calendar?, isClick: Boolean) {

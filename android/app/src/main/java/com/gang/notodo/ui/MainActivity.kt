@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
         val buttonLogin: Button = findViewById(R.id.button_login)
         buttonLogin.setOnClickListener {
-            startActivity<TaskActivity>()
+            startActivity<CalendarActivity>()
             testDb()
         }
 
