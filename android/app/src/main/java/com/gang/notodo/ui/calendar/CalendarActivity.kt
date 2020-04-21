@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gang.notodo.R
+import com.gang.notodo.data.OnRefreshCallBack
 import com.gang.notodo.data.Task
 import com.gang.notodo.data.TaskDataSource
 import com.gang.notodo.data.TaskRepository
@@ -63,6 +64,11 @@ class CalendarActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calendar)
         initView()
+        TaskRepository.addOnRefreshCallBack(object : OnRefreshCallBack {
+            override fun onRefresh() {
+                doInitData()
+            }
+        })
     }
 
     override fun onResume() {
@@ -141,12 +147,17 @@ class CalendarActivity : AppCompatActivity(),
     }
 
     private fun initData() {
+        doInitData()
+    }
+
+    private fun doInitData() {
         TaskRepository.getTasks(object : TaskDataSource.LoadTasksCallback {
 
             override fun onTasksLoaded(tasks: List<Task>) {
                 dateWhichHasTasks.clear()
-                tasks.distinctBy { "" + it.year + "#" + it.month + "#" + it.day }
+                tasks
                     .filter { it.isActive }
+                    .distinctBy { "" + it.year + "#" + it.month + "#" + it.day }
                     .forEach {
                         getSchemeCalendar(
                             it.year,
@@ -188,7 +199,9 @@ class CalendarActivity : AppCompatActivity(),
             object : TaskDataSource.LoadTasksCallback {
 
                 override fun onTasksLoaded(tasks: List<Task>) {
-                    mRecyclerViewAdapter.mDataList = tasks
+                    mRecyclerViewAdapter.mDataList = tasks.filter {
+                        it.isActive
+                    }
                     mRecyclerViewAdapter.notifyDataSetChanged()
                     mRecyclerView.scrollToPosition(0)
                 }

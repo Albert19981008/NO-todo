@@ -8,7 +8,7 @@ import java.util.*
  * Task 的仓库
  * 所有此类的方法 必须在主线程中调用
  */
-object TaskRepository : TaskDataSource, TaskCache {
+object TaskRepository : TaskDataSource, TaskCache, OnRefreshCallBack {
 
     private var cacheIsDirty = true
 
@@ -20,6 +20,8 @@ object TaskRepository : TaskDataSource, TaskCache {
 
     private val blockedCallback: Queue<TaskDataSource.LoadTasksCallback> =
         LinkedList<TaskDataSource.LoadTasksCallback>()
+
+    private val onRefreshCallBacks = mutableListOf<OnRefreshCallBack>()
 
     override fun getTasks(callback: TaskDataSource.LoadTasksCallback) {
         when {
@@ -64,6 +66,7 @@ object TaskRepository : TaskDataSource, TaskCache {
     override fun saveTask(task: Task) {
         cachedTasks[task.id] = task
         local.saveTask(task)
+        onRefresh()
     }
 
     override fun clearCompletedTasks() {
@@ -71,21 +74,25 @@ object TaskRepository : TaskDataSource, TaskCache {
             !it.isCompleted
         } as LinkedHashMap<String, Task>
         local.clearCompletedTasks()
+        onRefresh()
     }
 
     override fun completeTask(taskId: String) {
         cachedTasks[taskId]?.isCompleted = true
         local.completeTask(taskId)
+        onRefresh()
     }
 
     override fun deleteAllTasks() {
         cachedTasks.clear()
         local.deleteAllTasks()
+        onRefresh()
     }
 
     override fun deleteTask(taskId: String) {
         cachedTasks.remove(taskId)
         local.deleteTask(taskId)
+        onRefresh()
     }
 
     private fun doRefreshCache(tasks: List<Task>) {
@@ -124,5 +131,15 @@ object TaskRepository : TaskDataSource, TaskCache {
                 onNotAvailable()
             }
         })
+    }
+
+    override fun onRefresh() {
+        onRefreshCallBacks.forEach {
+            it.onRefresh()
+        }
+    }
+
+    fun addOnRefreshCallBack(onRefreshCallBack: OnRefreshCallBack) {
+        onRefreshCallBacks.add(onRefreshCallBack)
     }
 }
