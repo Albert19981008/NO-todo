@@ -34,17 +34,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun testDb() {
-        TaskRepository.deleteAllTasks()
-        TaskRepository.saveTask(Task("testTitle", "testDes", 2020,4,13))
-        TaskRepository.saveTask(Task("testTitle", "testDes", 2020,4,26))
-        TaskRepository.saveTask(Task("testTitle", "testDes", 2020,5,11))
+//        TaskRepository.deleteAllTasks()
+        TaskRepository.saveTask(Task("testTaskTitle", "testTaskDes", 2020,4,13))
+        TaskRepository.saveTask(Task("testTaskTitle", "testTaskDes", 2020,4,26))
+        TaskRepository.saveTask(Task("testTaskTitle", "testTaskDes", 2020,5,11))
         TaskRepository.getTasks(object : TaskDataSource.LoadTasksCallback {
             override fun onDataNotAvailable() {
             }
 
             override fun onTasksLoaded(tasks: List<Task>) {
                 loge(tasks.toString())
-                toast(tasks.toString())
+//                toast(tasks.toString())
             }
 
         })

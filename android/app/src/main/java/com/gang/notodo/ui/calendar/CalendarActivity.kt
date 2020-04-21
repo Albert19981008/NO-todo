@@ -162,10 +162,7 @@ class CalendarActivity : AppCompatActivity(),
             mTextYear.text = it.year.toString()
             mTextLunar.text = it.lunar
             mYear = it.year
-            val testTimeStamp = calendarToTimeStamp(it)
-            val calendar2 = timeStampToCalendar(testTimeStamp)
             reloadRecyclerView(it)
-
         }
     }
 
@@ -176,12 +173,12 @@ class CalendarActivity : AppCompatActivity(),
             object : TaskDataSource.LoadTasksCallback {
 
                 override fun onTasksLoaded(tasks: List<Task>) {
-                    mRecyclerViewAdapter.setmDataList(tasks)
+                    mRecyclerViewAdapter.mDataList = tasks
                     mRecyclerViewAdapter.notifyDataSetChanged()
                 }
 
                 override fun onDataNotAvailable() {
-                    mRecyclerViewAdapter.setmDataList(arrayListOf())
+                    mRecyclerViewAdapter.mDataList = arrayListOf()
                     mRecyclerViewAdapter.notifyDataSetChanged()
                 }
             })
