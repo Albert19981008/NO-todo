@@ -18,6 +18,7 @@ import com.gang.notodo.data.TaskDataSource
 import com.gang.notodo.data.TaskRepository
 import com.gang.notodo.ui.AddTaskActivity
 import com.gang.notodo.ui.ListActivity
+import com.gang.notodo.ui.TaskRecyclerViewAdapter
 import com.gang.notodo.util.CalendarUtil
 import com.gang.notodo.util.CalendarUtil.getSchemeCalendar
 import com.gang.notodo.util.setupActionBar
