@@ -138,7 +138,9 @@ class CalendarActivity : AppCompatActivity(),
     }
 
     override fun onCalendarLongClick(calendar: Calendar?) {
-        Log.e("onDateLongClick", "  -- " + calendar?.getDay() + "  --  " + calendar?.getMonth())
+        calendar?.let {
+            Log.e("onDateLongClick", "  -- " + it.day + "  --  " + it.month)
+        }
     }
 
     override fun onYearChange(year: Int) {
