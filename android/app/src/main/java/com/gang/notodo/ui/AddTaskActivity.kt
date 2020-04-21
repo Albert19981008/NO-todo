@@ -64,7 +64,6 @@ class AddTaskActivity : AppCompatActivity() {
             val popup = PopupMenu(this, v)
             val inflater = popup.menuInflater
             inflater.inflate(R.menu.menu_indicator, popup.menu)
-            popup.show()
             popup.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.item_calendar -> startActivity<CalendarActivity>()
@@ -72,6 +71,7 @@ class AddTaskActivity : AppCompatActivity() {
                 }
                 false
             }
+            popup.show()
         }
     }
 
