@@ -34,16 +34,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun testDb() {
-//        TaskRepository.deleteAllTasks()
         TaskRepository.getTasks(object : TaskDataSource.LoadTasksCallback {
             override fun onDataNotAvailable() {
                 TaskRepository.saveTask(Task("testTaskTitle1", "testTaskDes1", 2020,4,13))
-                TaskRepository.saveTask(Task("testTaskTitle2", "testTaskDes2", 2020,4,26))
+                val tmp = Task("testTaskTitle2", "testTaskDes2", 2020,4,26)
+                TaskRepository.saveTask(tmp)
+                TaskRepository.completeTask(tmp.id)
                 TaskRepository.saveTask(Task("testTaskTitle3", "testTaskDes3", 2020,5,11))
             }
 
             override fun onTasksLoaded(tasks: List<Task>) {
                 loge(tasks.toString())
+                TaskRepository.completeTask(tasks[0].id)
             }
         })
     }
