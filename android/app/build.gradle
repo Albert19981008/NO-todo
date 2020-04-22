@@ -27,7 +27,17 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/build/schemas".toString()]
+            }
+        }
+    }
 }
+
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
