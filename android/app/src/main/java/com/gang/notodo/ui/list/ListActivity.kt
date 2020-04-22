@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.gang.notodo.R
+import com.gang.notodo.data.TaskRepository
 import com.gang.notodo.ui.calendar.CalendarActivity
 import com.gang.notodo.util.setupActionBar
 import com.gang.notodo.util.startActivity
@@ -45,8 +46,8 @@ class ListActivity : AppCompatActivity() {
         mTabLayout = findViewById(R.id.tabs)
         mViewPager = findViewById(R.id.view_pager)
         mClearButton = findViewById(R.id.task_clear)
-        mClearButton.visibility = View.GONE
 
+        initClearButton()
         initToolBar()
         initFragmentList()
         initViewPager()
@@ -72,6 +73,22 @@ class ListActivity : AppCompatActivity() {
                 false
             }
             popup.show()
+        }
+    }
+
+    private fun initClearButton() {
+        mClearButton.visibility = View.GONE
+        mClearButton.setOnClickListener { v ->
+            val popup = PopupMenu(this, v)
+            val inflater = popup.menuInflater
+            inflater.inflate(R.menu.menu_clear, popup.menu)
+            popup.show()
+            popup.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.clear_all -> TaskRepository.clearCompletedTasks()
+                }
+                false
+            }
         }
     }
 

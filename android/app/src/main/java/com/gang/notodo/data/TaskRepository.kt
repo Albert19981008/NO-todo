@@ -71,7 +71,7 @@ object TaskRepository : TaskDataSource, TaskCache {
 
     override fun clearCompletedTasks() {
         cachedTasks = cachedTasks.filterValues {
-            !it.isCompleted
+            it.isActive
         } as LinkedHashMap<String, Task>
         local.clearCompletedTasks()
         onRefresh()
