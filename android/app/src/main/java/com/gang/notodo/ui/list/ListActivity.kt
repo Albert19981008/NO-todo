@@ -98,6 +98,24 @@ class ListActivity : AppCompatActivity() {
 
 
     private fun bindTabAndPager() {
+
+        mTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when(tab?.position) {
+                    0 -> {
+
+                    }
+                    1 -> {}
+                }
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+        })
         mTabLayout.setupWithViewPager(mViewPager)
     }
 
