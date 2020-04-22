@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 class ViewPagerFragmentAdapter(
     fragmentManager: FragmentManager, //Fragment列表
     fragmentList: List<Fragment>
-) : FragmentPagerAdapter(fragmentManager) {
+) : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private val mFragmentList = fragmentList
 

@@ -33,6 +33,20 @@ class TaskRecyclerViewAdapter(private val mContext: Context) :
     }
 
     /**
+     * 初始化ViewHolder
+     */
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.news_item,
+                parent,
+                false
+            )
+        )
+    }
+
+
+    /**
      * 关联ViewHolder
      */
     @SuppressLint("SetTextI18n")
@@ -50,10 +64,10 @@ class TaskRecyclerViewAdapter(private val mContext: Context) :
 
                 val popup = PopupMenu(mContext, view)
                 val inflater = popup.menuInflater
-                inflater.inflate(R.menu.menu_list_item, popup.menu)
+                inflater.inflate(R.menu.menu_list_item_complete, popup.menu)
                 popup.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
-                        R.id.item_delete -> {
+                        R.id.item_complete -> {
                             val toDelete = mDataList[position]
                             mDataList = mDataList.filter {
                                 it.id != toDelete.id
@@ -68,22 +82,31 @@ class TaskRecyclerViewAdapter(private val mContext: Context) :
 
                 true
             }
+        } else {
+            holder.mRoot.setOnLongClickListener { view ->
+
+                val popup = PopupMenu(mContext, view)
+                val inflater = popup.menuInflater
+                inflater.inflate(R.menu.menu_list_item_delete, popup.menu)
+                popup.setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.item_delete -> {
+                            val toDelete = mDataList[position]
+                            mDataList = mDataList.filter {
+                                it.id != toDelete.id
+                            }
+                            notifyDataSetChanged()
+                            TaskRepository.deleteTask(toDelete.id)
+                        }
+                    }
+                    false
+                }
+                popup.show()
+
+                true
+            }
         }
 
-    }
-
-
-    /**
-     * 初始化ViewHolder
-     */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.news_item,
-                parent,
-                false
-            )
-        )
     }
 
 

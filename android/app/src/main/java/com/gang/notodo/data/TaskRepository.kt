@@ -8,7 +8,7 @@ import java.util.*
  * Task 的仓库
  * 所有此类的方法 必须在主线程中调用
  */
-object TaskRepository : TaskDataSource, TaskCache, OnRefreshCallBack {
+object TaskRepository : TaskDataSource, TaskCache {
 
     private var cacheIsDirty = true
 
@@ -21,7 +21,7 @@ object TaskRepository : TaskDataSource, TaskCache, OnRefreshCallBack {
     private val blockedCallback: Queue<TaskDataSource.LoadTasksCallback> =
         LinkedList<TaskDataSource.LoadTasksCallback>()
 
-    private val onRefreshCallBacks = mutableListOf<OnRefreshCallBack>()
+    private var onRefreshObservers = mutableListOf<() -> Unit>()
 
     override fun getTasks(callback: TaskDataSource.LoadTasksCallback) {
         when {
@@ -71,7 +71,7 @@ object TaskRepository : TaskDataSource, TaskCache, OnRefreshCallBack {
 
     override fun clearCompletedTasks() {
         cachedTasks = cachedTasks.filterValues {
-            !it.isCompleted
+            it.isActive
         } as LinkedHashMap<String, Task>
         local.clearCompletedTasks()
         onRefresh()
@@ -133,13 +133,17 @@ object TaskRepository : TaskDataSource, TaskCache, OnRefreshCallBack {
         })
     }
 
-    override fun onRefresh() {
-        onRefreshCallBacks.forEach {
-            it.onRefresh()
+    private fun onRefresh() {
+        onRefreshObservers.forEach {
+            it.invoke()
         }
     }
 
-    fun addOnRefreshCallBack(onRefreshCallBack: OnRefreshCallBack) {
-        onRefreshCallBacks.add(onRefreshCallBack)
+    fun addOnRefreshObserver(onRefreshObserver: () -> Unit) {
+        onRefreshObservers.add(onRefreshObserver)
+    }
+
+    fun removeOnRefreshObserver(onRefreshObserver: () -> Unit) {
+        onRefreshObservers.remove(onRefreshObserver)
     }
 }

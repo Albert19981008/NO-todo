@@ -8,10 +8,12 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.gang.notodo.R
+import com.gang.notodo.data.TaskRepository
 import com.gang.notodo.ui.calendar.CalendarActivity
 import com.gang.notodo.util.setupActionBar
 import com.gang.notodo.util.startActivity
 import com.gang.notodo.util.toast
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 
 
@@ -21,6 +23,7 @@ class ListActivity : AppCompatActivity() {
     private lateinit var mToolBar: Toolbar
     private lateinit var mTabLayout: TabLayout
     private lateinit var mViewPager: ViewPager
+    private lateinit var mClearButton: FloatingActionButton
 
     //ViewPager的适配器
     private lateinit var mViewPagerFragmentAdapter: ViewPagerFragmentAdapter
@@ -42,11 +45,14 @@ class ListActivity : AppCompatActivity() {
         mToolBar = findViewById(R.id.toolBar)
         mTabLayout = findViewById(R.id.tabs)
         mViewPager = findViewById(R.id.view_pager)
+        mClearButton = findViewById(R.id.task_clear)
 
+        initClearButton()
         initToolBar()
         initFragmentList()
         initViewPager()
         bindTabAndPager()
+        bindClearButtonAndPosition()
     }
 
     private fun initToolBar() {
@@ -67,6 +73,22 @@ class ListActivity : AppCompatActivity() {
                 false
             }
             popup.show()
+        }
+    }
+
+    private fun initClearButton() {
+        mClearButton.visibility = View.GONE
+        mClearButton.setOnClickListener { v ->
+            val popup = PopupMenu(this, v)
+            val inflater = popup.menuInflater
+            inflater.inflate(R.menu.menu_clear, popup.menu)
+            popup.show()
+            popup.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.clear_all -> TaskRepository.clearCompletedTasks()
+                }
+                false
+            }
         }
     }
 
@@ -96,6 +118,23 @@ class ListActivity : AppCompatActivity() {
             ViewPagerFragmentAdapter(mFragmentManager, mFragmentList)
     }
 
+    private fun bindClearButtonAndPosition() {
+        mTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab?.position) {
+                    0 -> mClearButton.visibility = View.GONE
+                    1 -> mClearButton.visibility = View.VISIBLE
+                }
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+        })
+    }
 
     private fun bindTabAndPager() {
         mTabLayout.setupWithViewPager(mViewPager)
