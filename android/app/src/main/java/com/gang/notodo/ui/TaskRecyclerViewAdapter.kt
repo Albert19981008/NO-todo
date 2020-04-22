@@ -33,6 +33,20 @@ class TaskRecyclerViewAdapter(private val mContext: Context) :
     }
 
     /**
+     * 初始化ViewHolder
+     */
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.news_item,
+                parent,
+                false
+            )
+        )
+    }
+
+
+    /**
      * 关联ViewHolder
      */
     @SuppressLint("SetTextI18n")
@@ -76,7 +90,7 @@ class TaskRecyclerViewAdapter(private val mContext: Context) :
                 inflater.inflate(R.menu.menu_list_item_delete, popup.menu)
                 popup.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
-                        R.id.item_complete -> {
+                        R.id.item_delete -> {
                             val toDelete = mDataList[position]
                             mDataList = mDataList.filter {
                                 it.id != toDelete.id
@@ -93,20 +107,6 @@ class TaskRecyclerViewAdapter(private val mContext: Context) :
             }
         }
 
-    }
-
-
-    /**
-     * 初始化ViewHolder
-     */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.news_item,
-                parent,
-                false
-            )
-        )
     }
 
 
