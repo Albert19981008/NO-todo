@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gang.notodo.R
-import com.gang.notodo.data.OnRefreshCallBack
+import com.gang.notodo.data.OnRefreshObserver
 import com.gang.notodo.data.Task
 import com.gang.notodo.data.TaskDataSource
 import com.gang.notodo.data.TaskRepository
@@ -60,20 +60,27 @@ class CalendarActivity : AppCompatActivity(),
 
     private val selectDate = MyDate()
 
+    private val mOnRefreshOnRefreshObserver: OnRefreshObserver = object : OnRefreshObserver {
+        override fun onRefresh() {
+            initDataAndBindView()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calendar)
         initView()
-        TaskRepository.addOnRefreshCallBack(object : OnRefreshCallBack {
-            override fun onRefresh() {
-                doInitData()
-            }
-        })
+        TaskRepository.addOnRefreshCallBack(mOnRefreshOnRefreshObserver)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        TaskRepository.removeOnRefreshCallBack(mOnRefreshOnRefreshObserver)
     }
 
     override fun onResume() {
         super.onResume()
-        initData()
+        initDataAndBindView()
         reloadRecyclerView(getSchemeCalendar(selectDate.year, selectDate.month, selectDate.day, 0))
     }
 
@@ -146,11 +153,8 @@ class CalendarActivity : AppCompatActivity(),
         mRecyclerView.adapter = mRecyclerViewAdapter
     }
 
-    private fun initData() {
-        doInitData()
-    }
 
-    private fun doInitData() {
+    private fun initDataAndBindView() {
         TaskRepository.getTasks(object : TaskDataSource.LoadTasksCallback {
 
             override fun onTasksLoaded(tasks: List<Task>) {

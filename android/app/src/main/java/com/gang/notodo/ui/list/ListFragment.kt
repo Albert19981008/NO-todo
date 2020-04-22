@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gang.notodo.R
-import com.gang.notodo.data.OnRefreshCallBack
+import com.gang.notodo.data.OnRefreshObserver
 import com.gang.notodo.data.Task
 import com.gang.notodo.data.TaskDataSource
 import com.gang.notodo.data.TaskRepository
@@ -41,7 +41,7 @@ class ListFragment(contentLayoutId: Int, active: Boolean) : Fragment(contentLayo
             doRefresh()
 
             TaskRepository.addOnRefreshCallBack(
-                object : OnRefreshCallBack {
+                object : OnRefreshObserver {
                     override fun onRefresh() {
                         doRefresh()
                     }

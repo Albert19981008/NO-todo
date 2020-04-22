@@ -2,7 +2,7 @@ package com.gang.notodo.data
 
 
 @FunctionalInterface
-interface OnRefreshCallBack {
+interface OnRefreshObserver {
 
     fun onRefresh()
 }
