@@ -8,7 +8,7 @@ import java.util.*
  * Task 的仓库
  * 所有此类的方法 必须在主线程中调用
  */
-object TaskRepository : TaskDataSource, TaskCache, OnRefreshObserver {
+object TaskRepository : TaskDataSource, TaskCache {
 
     private var cacheIsDirty = true
 
@@ -21,7 +21,7 @@ object TaskRepository : TaskDataSource, TaskCache, OnRefreshObserver {
     private val blockedCallback: Queue<TaskDataSource.LoadTasksCallback> =
         LinkedList<TaskDataSource.LoadTasksCallback>()
 
-    private var onRefreshObservers = mutableListOf<OnRefreshObserver>()
+    private var onRefreshObservers = mutableListOf<() -> Unit>()
 
     override fun getTasks(callback: TaskDataSource.LoadTasksCallback) {
         when {
@@ -133,17 +133,17 @@ object TaskRepository : TaskDataSource, TaskCache, OnRefreshObserver {
         })
     }
 
-    override fun onRefresh() {
+    private fun onRefresh() {
         onRefreshObservers.forEach {
-            it.onRefresh()
+            it.invoke()
         }
     }
 
-    fun addOnRefreshObserver(onRefreshObserver: OnRefreshObserver) {
+    fun addOnRefreshObserver(onRefreshObserver: () -> Unit) {
         onRefreshObservers.add(onRefreshObserver)
     }
 
-    fun removeOnRefreshObserver(onRefreshObserver: OnRefreshObserver) {
+    fun removeOnRefreshObserver(onRefreshObserver: () -> Unit) {
         onRefreshObservers.remove(onRefreshObserver)
     }
 }

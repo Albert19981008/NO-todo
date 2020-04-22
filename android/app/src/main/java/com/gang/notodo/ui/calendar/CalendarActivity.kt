@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gang.notodo.R
-import com.gang.notodo.data.OnRefreshObserver
 import com.gang.notodo.data.Task
 import com.gang.notodo.data.TaskDataSource
 import com.gang.notodo.data.TaskRepository
@@ -60,22 +59,16 @@ class CalendarActivity : AppCompatActivity(),
 
     private val selectDate = MyDate()
 
-    private val mOnRefreshOnRefreshObserver: OnRefreshObserver = object : OnRefreshObserver {
-        override fun onRefresh() {
-            initDataAndBindView()
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calendar)
         initView()
-        TaskRepository.addOnRefreshObserver(mOnRefreshOnRefreshObserver)
+        TaskRepository.addOnRefreshObserver(this::initDataAndBindView)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        TaskRepository.removeOnRefreshObserver(mOnRefreshOnRefreshObserver)
+        TaskRepository.removeOnRefreshObserver(this::initDataAndBindView)
     }
 
     override fun onResume() {
