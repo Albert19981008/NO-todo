@@ -12,6 +12,7 @@ import com.gang.notodo.ui.calendar.CalendarActivity
 import com.gang.notodo.util.setupActionBar
 import com.gang.notodo.util.startActivity
 import com.gang.notodo.util.toast
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 
 
@@ -21,6 +22,7 @@ class ListActivity : AppCompatActivity() {
     private lateinit var mToolBar: Toolbar
     private lateinit var mTabLayout: TabLayout
     private lateinit var mViewPager: ViewPager
+    private lateinit var mClearButton: FloatingActionButton
 
     //ViewPager的适配器
     private lateinit var mViewPagerFragmentAdapter: ViewPagerFragmentAdapter
@@ -42,11 +44,14 @@ class ListActivity : AppCompatActivity() {
         mToolBar = findViewById(R.id.toolBar)
         mTabLayout = findViewById(R.id.tabs)
         mViewPager = findViewById(R.id.view_pager)
+        mClearButton = findViewById(R.id.task_clear)
+        mClearButton.visibility = View.GONE
 
         initToolBar()
         initFragmentList()
         initViewPager()
         bindTabAndPager()
+        bindClearButtonAndPosition()
     }
 
     private fun initToolBar() {
@@ -96,17 +101,17 @@ class ListActivity : AppCompatActivity() {
             ViewPagerFragmentAdapter(mFragmentManager, mFragmentList)
     }
 
-
-    private fun bindTabAndPager() {
-
+    private fun bindClearButtonAndPosition() {
         mTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                when(tab?.position) {
+                when (tab?.position) {
                     0 -> {
-
+                        mClearButton.visibility = View.GONE
                     }
-                    1 -> {}
+                    1 -> {
+                        mClearButton.visibility = View.VISIBLE
+                    }
                 }
             }
 
@@ -116,6 +121,9 @@ class ListActivity : AppCompatActivity() {
             override fun onTabUnselected(tab: TabLayout.Tab?) {
             }
         })
+    }
+
+    private fun bindTabAndPager() {
         mTabLayout.setupWithViewPager(mViewPager)
     }
 
