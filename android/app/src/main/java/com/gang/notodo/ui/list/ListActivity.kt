@@ -106,12 +106,8 @@ class ListActivity : AppCompatActivity() {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
-                    0 -> {
-                        mClearButton.visibility = View.GONE
-                    }
-                    1 -> {
-                        mClearButton.visibility = View.VISIBLE
-                    }
+                    0 -> mClearButton.visibility = View.GONE
+                    1 -> mClearButton.visibility = View.VISIBLE
                 }
             }
 
