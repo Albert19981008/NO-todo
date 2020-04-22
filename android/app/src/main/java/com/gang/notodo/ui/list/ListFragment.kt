@@ -40,7 +40,7 @@ class ListFragment(contentLayoutId: Int, active: Boolean) : Fragment(contentLayo
             initRecyclerView()
             doRefresh()
 
-            TaskRepository.addOnRefreshCallBack(
+            TaskRepository.addOnRefreshObserver(
                 object : OnRefreshObserver {
                     override fun onRefresh() {
                         doRefresh()

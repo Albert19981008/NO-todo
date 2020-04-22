@@ -139,13 +139,11 @@ object TaskRepository : TaskDataSource, TaskCache, OnRefreshObserver {
         }
     }
 
-    fun addOnRefreshCallBack(onRefreshObserver: OnRefreshObserver) {
+    fun addOnRefreshObserver(onRefreshObserver: OnRefreshObserver) {
         onRefreshObservers.add(onRefreshObserver)
     }
 
-    fun removeOnRefreshCallBack(onRefreshObserver: OnRefreshObserver) {
-        onRefreshObservers = onRefreshObservers.filter {
-            it != onRefreshObserver
-        }.toMutableList()
+    fun removeOnRefreshObserver(onRefreshObserver: OnRefreshObserver) {
+        onRefreshObservers.remove(onRefreshObserver)
     }
 }

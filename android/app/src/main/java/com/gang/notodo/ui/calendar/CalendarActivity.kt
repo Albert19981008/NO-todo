@@ -70,12 +70,12 @@ class CalendarActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calendar)
         initView()
-        TaskRepository.addOnRefreshCallBack(mOnRefreshOnRefreshObserver)
+        TaskRepository.addOnRefreshObserver(mOnRefreshOnRefreshObserver)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        TaskRepository.removeOnRefreshCallBack(mOnRefreshOnRefreshObserver)
+        TaskRepository.removeOnRefreshObserver(mOnRefreshOnRefreshObserver)
     }
 
     override fun onResume() {
