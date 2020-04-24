@@ -18,6 +18,11 @@ fun Context.toast(text: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, text, duration).show()
 }
 
+fun Context.dipToPx(dpValue: Float): Int {
+    val scale = resources.displayMetrics.density
+    return (dpValue * scale + 0.5f).toInt()
+}
+
 //使用内联函数的泛型参数 reified 特性来实现
 inline fun <reified T : Activity> Context.startActivity() {
     val intent = Intent(this, T::class.java)
