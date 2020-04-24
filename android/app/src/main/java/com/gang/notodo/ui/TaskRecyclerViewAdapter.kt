@@ -28,22 +28,14 @@ class TaskRecyclerViewAdapter(private val mContext: Context) :
     /**
      * 返回数据List大小
      */
-    override fun getItemCount(): Int {
-        return mDataList.size
-    }
+    override fun getItemCount() = mDataList.size
 
     /**
      * 初始化ViewHolder
      */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.news_item,
-                parent,
-                false
-            )
-        )
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
+        LayoutInflater.from(parent.context).inflate(R.layout.news_item, parent, false)
+    )
 
 
     /**

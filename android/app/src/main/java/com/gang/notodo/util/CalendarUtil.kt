@@ -1,6 +1,5 @@
 package com.gang.notodo.util
 
-import android.content.Context
 import com.haibin.calendarview.Calendar
 
 object CalendarUtil {
@@ -26,32 +25,5 @@ object CalendarUtil {
         calendar.day = day
         calendar.schemeColor = color //如果单独标记颜色、则会使用这个颜色
         return calendar
-    }
-
-    fun timeStampToCalendar(timeMillis: Long): Calendar {
-        val javaUtilCalendar = java.util.Calendar.getInstance()
-        javaUtilCalendar.timeInMillis = timeMillis
-        return Calendar().apply {
-            this.year = javaUtilCalendar.get(java.util.Calendar.YEAR)
-            this.month = javaUtilCalendar.get(java.util.Calendar.MONTH) + 1
-            this.day = javaUtilCalendar.get(java.util.Calendar.DAY_OF_MONTH)
-        }
-    }
-
-    fun calendarToTimeStamp(calendar: Calendar): Long {
-        return calendar.timeInMillis
-    }
-
-    /**
-     * dp转px
-     *
-     * @param context context
-     * @param dpValue dp
-     * @return px
-     */
-    @JvmStatic
-    fun dipToPx(context: Context, dpValue: Float): Int {
-        val scale = context.resources.displayMetrics.density
-        return (dpValue * scale + 0.5f).toInt()
     }
 }

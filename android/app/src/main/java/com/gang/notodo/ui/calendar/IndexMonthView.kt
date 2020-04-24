@@ -4,8 +4,7 @@ package com.gang.notodo.ui.calendar
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
-
-import com.gang.notodo.util.CalendarUtil
+import com.gang.notodo.util.dipToPx
 import com.haibin.calendarview.Calendar
 import com.haibin.calendarview.MonthView
 import kotlin.math.min
@@ -13,9 +12,9 @@ import kotlin.math.min
 
 class IndexMonthView(context: Context) : MonthView(context) {
 
-    private val mPadding = CalendarUtil.dipToPx(context, 4f)
-    private val mH = CalendarUtil.dipToPx(context, 2f)
-    private val mW = CalendarUtil.dipToPx(context, 8f)
+    private val mPadding = context.dipToPx(4f)
+    private val mH = context.dipToPx(2f)
+    private val mW = context.dipToPx(8f)
     private var mRadius: Int = 0
 
     private val mSchemeBasicPaint = Paint().apply {

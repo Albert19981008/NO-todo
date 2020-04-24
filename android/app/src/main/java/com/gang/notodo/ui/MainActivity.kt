@@ -12,6 +12,7 @@ import com.gang.notodo.util.loge
 import com.gang.notodo.util.setupActionBar
 import com.gang.notodo.util.startActivity
 
+
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
