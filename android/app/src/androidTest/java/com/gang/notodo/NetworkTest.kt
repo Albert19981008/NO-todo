@@ -1,6 +1,7 @@
 package com.gang.notodo
 
 
+import android.os.Looper
 import android.util.Log
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -36,10 +37,12 @@ class NetworkTest {
         val networkApi = retrofit.create(NetworkApi::class.java)
         networkApi.getBook().enqueue(object : retrofit2.Callback<List<Book>> {
             override fun onFailure(call: Call<List<Book>>, t: Throwable) {
+                Log.e("111", "" + (Looper.getMainLooper() == Looper.myLooper()))
                 Log.e("2222", "onFailure: failed$t")
             }
 
             override fun onResponse(call: Call<List<Book>>, response: Response<List<Book>>) {
+                Log.e("111", "" + (Looper.getMainLooper() == Looper.myLooper()))
                 Log.e("111111111111111111111", "onResponse: " + response.body()!!)
             }
 
