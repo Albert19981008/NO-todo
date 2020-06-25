@@ -8,6 +8,7 @@ import com.gang.notodo.R
 import com.gang.notodo.data.task.Task
 import com.gang.notodo.data.task.TaskDataSource
 import com.gang.notodo.data.task.TaskRepository
+import com.gang.notodo.data.user.Authenticate
 import com.gang.notodo.data.user.User
 import com.gang.notodo.data.user.UserAgent
 import com.gang.notodo.ui.calendar.CalendarActivity
@@ -17,17 +18,17 @@ import com.gang.notodo.util.startActivity
 import com.gang.notodo.util.toast
 
 
-class MainActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
     private lateinit var userNameView: EditText
     private lateinit var passwordView: EditText
     private lateinit var loginButton: Button
     private lateinit var registerButton: Button
-    private val authenticate = UserAgent
+    private val authenticate: Authenticate = UserAgent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_login)
         initView()
     }
 
@@ -54,7 +55,6 @@ class MainActivity : AppCompatActivity() {
         val userName = userNameView.text.toString()
         val password = passwordView.text.toString()
         val user = User(userName, password)
-//        toast("用户名: $userName")
         authenticate.login(user, ::doLogin, ::fail)
     }
 
@@ -81,9 +81,7 @@ class MainActivity : AppCompatActivity() {
         toast("注册成功!!")
     }
 
-    private fun fail(msg: String) {
-        toast(msg)
-    }
+    private fun fail(msg: String) = toast(msg)
 
     private fun testDb() {
         TaskRepository.getTasks(object : TaskDataSource.LoadTasksCallback {
