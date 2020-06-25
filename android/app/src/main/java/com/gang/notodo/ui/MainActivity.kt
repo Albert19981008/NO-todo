@@ -53,14 +53,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun doLogin(user: User) {
         toast("登录成功!!")
+        TaskRepository.userId = user.userId
         startActivity<CalendarActivity>()
         testDb()
         finish()
-    }
-
-    private fun loginSuccess(user: User) {
-        TaskRepository.userId = user.userId
-        toast("登录成功!!")
     }
 
     private fun loginFail() {
