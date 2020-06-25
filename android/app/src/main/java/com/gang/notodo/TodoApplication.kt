@@ -1,7 +1,7 @@
 package com.gang.notodo
 
 import android.app.Application
-import com.gang.notodo.data.TaskRepository
+import com.gang.notodo.data.task.TaskRepository
 
 
 class TodoApplication : Application() {

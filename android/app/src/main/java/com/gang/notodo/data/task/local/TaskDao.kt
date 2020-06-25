@@ -1,7 +1,7 @@
-package com.gang.notodo.data.local
+package com.gang.notodo.data.task.local
 
 import androidx.room.*
-import com.gang.notodo.data.Task
+import com.gang.notodo.data.task.Task
 
 @Dao
 interface TaskDao {

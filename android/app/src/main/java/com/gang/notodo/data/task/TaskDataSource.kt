@@ -1,4 +1,4 @@
-package com.gang.notodo.data
+package com.gang.notodo.data.task
 
 
 interface TaskDataSource {

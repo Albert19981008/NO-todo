@@ -1,11 +1,12 @@
-package com.gang.notodo.data.local
+package com.gang.notodo.data.task.local
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.gang.notodo.data.Task
-import com.gang.notodo.data.User
+import com.gang.notodo.data.task.Task
+import com.gang.notodo.data.user.User
+import com.gang.notodo.data.user.UserDao
 
 
 @Database(entities = [Task::class, User::class], version = 1)

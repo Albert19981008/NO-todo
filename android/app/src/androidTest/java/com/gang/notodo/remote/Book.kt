@@ -1,4 +1,4 @@
-package com.gang.notodo.data.remote
+package com.gang.notodo.remote
 
 import com.google.gson.annotations.SerializedName
 

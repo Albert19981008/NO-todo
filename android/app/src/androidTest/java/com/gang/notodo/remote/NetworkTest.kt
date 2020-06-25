@@ -1,20 +1,16 @@
-package com.gang.notodo
+package com.gang.notodo.remote
 
 
 import android.os.Looper
 import android.util.Log
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.gang.notodo.data.remote.Book
-import com.gang.notodo.data.remote.network.NetworkApi
-import com.gang.notodo.data.remote.network.NetworkConstants
+import com.gang.notodo.remote.network.NetworkApi
+import com.gang.notodo.remote.network.NetworkConstants
 import com.google.gson.Gson
-import okhttp3.ResponseBody
 
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import org.junit.Assert.*
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit

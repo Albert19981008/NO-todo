@@ -1,4 +1,4 @@
-package com.gang.notodo.data.remote.network
+package com.gang.notodo.remote.network
 
 
 object NetworkConstants {

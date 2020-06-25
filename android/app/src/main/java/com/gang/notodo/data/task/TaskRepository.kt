@@ -1,6 +1,6 @@
-package com.gang.notodo.data
+package com.gang.notodo.data.task
 
-import com.gang.notodo.data.local.TaskLocalSource
+import com.gang.notodo.data.task.local.TaskLocalSource
 import java.util.*
 
 

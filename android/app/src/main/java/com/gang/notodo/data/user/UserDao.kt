@@ -1,10 +1,10 @@
-package com.gang.notodo.data.local
+package com.gang.notodo.data.user
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.gang.notodo.data.User
+import com.gang.notodo.data.user.User
 
 @Dao
 interface UserDao {

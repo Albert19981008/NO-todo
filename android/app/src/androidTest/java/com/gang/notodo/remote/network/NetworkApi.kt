@@ -1,7 +1,6 @@
-package com.gang.notodo.data.remote.network
+package com.gang.notodo.remote.network
 
-import com.gang.notodo.data.remote.Book
-import okhttp3.ResponseBody
+import com.gang.notodo.remote.Book
 import retrofit2.Call
 import retrofit2.http.GET
 

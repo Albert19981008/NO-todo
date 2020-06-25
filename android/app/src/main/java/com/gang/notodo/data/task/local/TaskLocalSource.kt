@@ -1,8 +1,8 @@
-package com.gang.notodo.data.local
+package com.gang.notodo.data.task.local
 
 import com.gang.notodo.TodoApplication
-import com.gang.notodo.data.Task
-import com.gang.notodo.data.TaskDataSource
+import com.gang.notodo.data.task.Task
+import com.gang.notodo.data.task.TaskDataSource
 import com.gang.notodo.util.AppExecutors
 
 

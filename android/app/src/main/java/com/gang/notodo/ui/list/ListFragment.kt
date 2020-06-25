@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gang.notodo.R
-import com.gang.notodo.data.Task
-import com.gang.notodo.data.TaskDataSource
-import com.gang.notodo.data.TaskRepository
+import com.gang.notodo.data.task.Task
+import com.gang.notodo.data.task.TaskDataSource
+import com.gang.notodo.data.task.TaskRepository
 import com.gang.notodo.ui.TaskRecyclerViewAdapter
 
 

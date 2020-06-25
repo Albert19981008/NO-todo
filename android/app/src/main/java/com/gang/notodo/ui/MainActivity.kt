@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.gang.notodo.R
-import com.gang.notodo.data.Task
-import com.gang.notodo.data.TaskDataSource
-import com.gang.notodo.data.TaskRepository
+import com.gang.notodo.data.task.Task
+import com.gang.notodo.data.task.TaskDataSource
+import com.gang.notodo.data.task.TaskRepository
 import com.gang.notodo.ui.calendar.CalendarActivity
 import com.gang.notodo.util.loge
 import com.gang.notodo.util.setupActionBar
@@ -37,11 +37,33 @@ class MainActivity : AppCompatActivity() {
     private fun testDb() {
         TaskRepository.getTasks(object : TaskDataSource.LoadTasksCallback {
             override fun onDataNotAvailable() {
-                TaskRepository.saveTask(Task("testTaskTitle1", "testTaskDes1", 2020, 4, 13))
-                val tmp = Task("testTaskTitle2", "testTaskDes2", 2020, 4, 26)
+                TaskRepository.saveTask(
+                    Task(
+                        "testTaskTitle1",
+                        "testTaskDes1",
+                        2020,
+                        4,
+                        13
+                    )
+                )
+                val tmp = Task(
+                    "testTaskTitle2",
+                    "testTaskDes2",
+                    2020,
+                    4,
+                    26
+                )
                 TaskRepository.saveTask(tmp)
                 TaskRepository.completeTask(tmp.id)
-                TaskRepository.saveTask(Task("testTaskTitle3", "testTaskDes3", 2020, 5, 11))
+                TaskRepository.saveTask(
+                    Task(
+                        "testTaskTitle3",
+                        "testTaskDes3",
+                        2020,
+                        5,
+                        11
+                    )
+                )
             }
 
             override fun onTasksLoaded(tasks: List<Task>) {
