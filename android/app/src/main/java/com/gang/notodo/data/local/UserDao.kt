@@ -2,6 +2,7 @@ package com.gang.notodo.data.local
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.gang.notodo.data.User
 
@@ -14,6 +15,6 @@ interface UserDao {
     @Query("select * from users where userName like :name")
     fun getUserByName(name: String): User
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUser(user: User)
 }
