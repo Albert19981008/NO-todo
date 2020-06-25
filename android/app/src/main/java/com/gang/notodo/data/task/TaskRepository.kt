@@ -23,6 +23,8 @@ object TaskRepository : TaskDataSource, TaskCache {
 
     private var onRefreshObservers = mutableListOf<() -> Unit>()
 
+    var userId: String = ""
+
     override fun getTasks(callback: TaskDataSource.LoadTasksCallback) {
         when {
             loading -> blockedCallback.offer(callback)

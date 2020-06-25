@@ -11,7 +11,7 @@ object UserAgent {
 
     private val appExecutors = AppExecutors
 
-    private fun login(user: User, successCb: (User) -> Unit, failCb: () -> Unit) {
+    fun login(user: User, successCb: (User) -> Unit, failCb: () -> Unit) {
         appExecutors.diskIO.execute {
             val userSearching = userDao.getUserByName(user.userName)
             if (userSearching != null && userSearching.password == user.password) {
@@ -24,7 +24,7 @@ object UserAgent {
         }
     }
 
-    private fun register(user: User, successCb: (User) -> Unit, failCb: () -> Unit) {
+    fun register(user: User, successCb: (User) -> Unit, failCb: () -> Unit) {
         appExecutors.diskIO.execute {
             val userSearching = userDao.getUserByName(user.userName)
             if (userSearching != null) {
