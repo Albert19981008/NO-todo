@@ -1,6 +1,6 @@
-package com.gang.notodo.data
+package com.gang.notodo.data.task
 
-import com.gang.notodo.data.local.TaskLocalSource
+import com.gang.notodo.data.task.local.TaskLocalSource
 import java.util.*
 
 
@@ -22,6 +22,8 @@ object TaskRepository : TaskDataSource, TaskCache {
         LinkedList<TaskDataSource.LoadTasksCallback>()
 
     private var onRefreshObservers = mutableListOf<() -> Unit>()
+
+    var userId: String = ""
 
     override fun getTasks(callback: TaskDataSource.LoadTasksCallback) {
         when {

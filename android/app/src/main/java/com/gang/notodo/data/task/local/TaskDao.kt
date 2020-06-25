@@ -1,16 +1,16 @@
-package com.gang.notodo.data.local
+package com.gang.notodo.data.task.local
 
 import androidx.room.*
-import com.gang.notodo.data.Task
+import com.gang.notodo.data.task.Task
 
 @Dao
 interface TaskDao {
 
-    @Query("select * from tasks")
-    fun getAllTasks(): List<Task>
+    @Query("select * from tasks where userId = :userId")
+    fun getAllTasksByUserId(userId: String): List<Task>
 
-    @Query("select * from tasks where year = :year and month = :month and day = :day")
-    fun getTasksByDate(year: Int, month: Int, day: Int): List<Task>
+    @Query("select * from tasks where year = :year and month = :month and day = :day and userId = :userId")
+    fun getTasksByDate(year: Int, month: Int, day: Int, userId: String): List<Task>
 
     /**
      * 通过 id 查找任务

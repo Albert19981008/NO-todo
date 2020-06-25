@@ -8,7 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.gang.notodo.R
-import com.gang.notodo.data.TaskRepository
+import com.gang.notodo.data.task.TaskRepository
 import com.gang.notodo.ui.calendar.CalendarActivity
 import com.gang.notodo.util.setupActionBar
 import com.gang.notodo.util.startActivity

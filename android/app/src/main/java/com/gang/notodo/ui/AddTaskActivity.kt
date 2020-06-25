@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.Toolbar
 import com.gang.notodo.R
-import com.gang.notodo.data.Task
-import com.gang.notodo.data.TaskRepository
+import com.gang.notodo.data.task.Task
+import com.gang.notodo.data.task.TaskRepository
 import com.gang.notodo.ui.calendar.CalendarActivity
 import com.gang.notodo.ui.list.ListActivity
 import com.gang.notodo.util.setupActionBar
@@ -80,7 +80,14 @@ class AddTaskActivity : AppCompatActivity() {
             toast("请不要使用空标题")
             return
         }
-        val task = Task(title.text.toString(), description.text.toString(), year, month, day)
+        val task = Task(
+            title.text.toString(),
+            description.text.toString(),
+            year,
+            month,
+            day,
+            TaskRepository.userId
+        )
         TaskRepository.saveTask(task)
         startActivity<CalendarActivity>()
         finish()

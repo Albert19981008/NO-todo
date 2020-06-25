@@ -11,8 +11,8 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.gang.notodo.R
-import com.gang.notodo.data.Task
-import com.gang.notodo.data.TaskRepository
+import com.gang.notodo.data.task.Task
+import com.gang.notodo.data.task.TaskRepository
 import com.gang.notodo.util.toast
 
 
