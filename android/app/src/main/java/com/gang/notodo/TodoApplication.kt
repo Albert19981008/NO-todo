@@ -13,6 +13,6 @@ class TodoApplication : Application() {
     }
 
     companion object {
-        var instance: TodoApplication? = null
+        lateinit var instance: TodoApplication
     }
 }

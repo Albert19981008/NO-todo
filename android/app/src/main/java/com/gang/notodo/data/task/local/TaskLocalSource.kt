@@ -9,7 +9,7 @@ import com.gang.notodo.util.AppExecutors
 object TaskLocalSource : TaskDataSource {
 
     private val appExecutors = AppExecutors
-    private val dao: TaskDao = AppDatabase.getInstance(TodoApplication.instance!!).taskDao()
+    private val dao: TaskDao = AppDatabase.getInstance(TodoApplication.instance).taskDao()
 
     override fun getTasks(callback: TaskDataSource.LoadTasksCallback) {
         appExecutors.diskIO.execute {
