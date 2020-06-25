@@ -21,6 +21,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var userNameView: EditText
     private lateinit var passwordView: EditText
+    private lateinit var loginButton: Button
+    private lateinit var registerButton: Button
+    private val authenticate = UserAgent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,11 +34,15 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
         userNameView = findViewById(R.id.login_username)
         passwordView = findViewById(R.id.login_password)
+        loginButton = findViewById(R.id.button_login)
+        registerButton = findViewById(R.id.button_register)
 
-        val buttonLogin: Button = findViewById(R.id.button_login)
-        buttonLogin.setOnClickListener {
+        loginButton.setOnClickListener {
             login()
+        }
 
+        registerButton.setOnClickListener {
+            register()
         }
 
         setupActionBar(R.id.toolBar) {
@@ -48,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         val password = passwordView.text.toString()
         val user = User(userName, password)
 //        toast("用户名: $userName")
-        UserAgent.login(user, ::doLogin, ::loginFail)
+        authenticate.login(user, ::doLogin, ::fail)
     }
 
     private fun doLogin(user: User) {
@@ -59,8 +66,23 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun loginFail() {
-        toast("用户名或密码错误, 登录失败!!")
+    private fun register() {
+        val userName = userNameView.text.toString()
+        val password = passwordView.text.toString()
+        val user = User(userName, password)
+        if (userName.isEmpty() || password.isEmpty()) {
+            fail("用户名和密码不能为空, 失败!!")
+            return
+        }
+        authenticate.register(user, ::registerSuccess, ::fail)
+    }
+
+    private fun registerSuccess() {
+        toast("注册成功!!")
+    }
+
+    private fun fail(msg: String) {
+        toast(msg)
     }
 
     private fun testDb() {
