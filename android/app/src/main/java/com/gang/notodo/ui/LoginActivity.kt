@@ -91,16 +91,18 @@ class LoginActivity : AppCompatActivity() {
                         "testTaskTitle1",
                         "testTaskDes1",
                         2020,
-                        4,
-                        13
+                        7,
+                        13,
+                        TaskRepository.userId
                     )
                 )
                 val tmp = Task(
                     "testTaskTitle2",
                     "testTaskDes2",
                     2020,
-                    4,
-                    26
+                    6,
+                    26,
+                    TaskRepository.userId
                 )
                 TaskRepository.saveTask(tmp)
                 TaskRepository.completeTask(tmp.id)
@@ -109,8 +111,9 @@ class LoginActivity : AppCompatActivity() {
                         "testTaskTitle3",
                         "testTaskDes3",
                         2020,
-                        5,
-                        11
+                        7,
+                        11,
+                        TaskRepository.userId
                     )
                 )
             }

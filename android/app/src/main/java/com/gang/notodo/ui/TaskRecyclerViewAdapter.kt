@@ -49,6 +49,7 @@ class TaskRecyclerViewAdapter(private val mContext: Context) :
         }
         holder.mRoot.setOnClickListener {
             mContext.toast("详情: " + mDataList[position].description)
+            mContext.toast("userId: " + mDataList[position].userId)
         }
 
         if (mDataList[position].isActive) {

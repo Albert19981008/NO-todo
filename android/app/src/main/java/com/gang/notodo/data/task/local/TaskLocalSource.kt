@@ -3,6 +3,7 @@ package com.gang.notodo.data.task.local
 import com.gang.notodo.TodoApplication
 import com.gang.notodo.data.task.Task
 import com.gang.notodo.data.task.TaskDataSource
+import com.gang.notodo.data.task.TaskRepository
 import com.gang.notodo.util.AppExecutors
 
 
@@ -13,7 +14,7 @@ object TaskLocalSource : TaskDataSource {
 
     override fun getTasks(callback: TaskDataSource.LoadTasksCallback) {
         appExecutors.diskIO.execute {
-            val tasks = dao.getAllTasks()
+            val tasks = dao.getAllTasksByUserId(userId = TaskRepository.userId)
             appExecutors.mainThread.execute {
                 if (tasks.isNotEmpty()) {
                     callback.onTasksLoaded(tasks)
@@ -31,7 +32,7 @@ object TaskLocalSource : TaskDataSource {
         callback: TaskDataSource.LoadTasksCallback
     ) {
         appExecutors.diskIO.execute {
-            val tasks = dao.getTasksByDate(year, month, day)
+            val tasks = dao.getTasksByDate(year, month, day, userId = TaskRepository.userId)
             appExecutors.mainThread.execute {
                 if (tasks.isEmpty()) {
                     callback.onTasksLoaded(tasks)

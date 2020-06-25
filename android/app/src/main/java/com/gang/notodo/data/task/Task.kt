@@ -1,9 +1,6 @@
 package com.gang.notodo.data.task
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Index
-import androidx.room.PrimaryKey
+import androidx.room.*
 import java.util.*
 
 /**
@@ -26,6 +23,9 @@ data class Task @JvmOverloads constructor(
 
     @ColumnInfo(name = "day")
     var day: Int = 0,
+
+    @ColumnInfo(name = "userId")
+    var userId: String = "",
 
     @PrimaryKey
     @ColumnInfo(name = "entryId")

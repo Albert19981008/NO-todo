@@ -85,7 +85,8 @@ class AddTaskActivity : AppCompatActivity() {
             description.text.toString(),
             year,
             month,
-            day
+            day,
+            TaskRepository.userId
         )
         TaskRepository.saveTask(task)
         startActivity<CalendarActivity>()
