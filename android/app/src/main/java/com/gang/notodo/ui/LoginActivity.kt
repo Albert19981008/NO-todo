@@ -1,6 +1,8 @@
 package com.gang.notodo.ui
 
 import android.os.Bundle
+import android.text.InputType
+import android.text.method.DigitsKeyListener
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -35,6 +37,11 @@ class LoginActivity : AppCompatActivity() {
     private fun initView() {
         userNameView = findViewById(R.id.login_username)
         passwordView = findViewById(R.id.login_password)
+        userNameView.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+        passwordView.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+        userNameView.keyListener = EnglishDigitsKeyListener()
+        passwordView.keyListener = EnglishDigitsKeyListener()
+
         loginButton = findViewById(R.id.button_login)
         registerButton = findViewById(R.id.button_register)
 
@@ -123,5 +130,17 @@ class LoginActivity : AppCompatActivity() {
                 TaskRepository.completeTask(tasks[0].id)
             }
         })
+    }
+
+    private class EnglishDigitsKeyListener : DigitsKeyListener() {
+
+        override fun getInputType() = InputType.TYPE_TEXT_VARIATION_PASSWORD
+
+        override fun getAcceptedChars() = ENG_CHAR_AND_NUM.toCharArray()
+
+        companion object {
+            const val ENG_CHAR_AND_NUM =
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
+        }
     }
 }
