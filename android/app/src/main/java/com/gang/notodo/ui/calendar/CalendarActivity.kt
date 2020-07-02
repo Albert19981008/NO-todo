@@ -27,6 +27,7 @@ import com.gang.notodo.util.toast
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.haibin.calendarview.Calendar
 import com.haibin.calendarview.CalendarView
+import java.lang.ref.WeakReference
 
 
 class CalendarActivity : AppCompatActivity(),
@@ -34,6 +35,7 @@ class CalendarActivity : AppCompatActivity(),
     CalendarView.OnCalendarLongClickListener,
     CalendarView.OnYearChangeListener {
 
+    private val callback = CalendarCallback(this)
 
     private lateinit var mRootView: View
 
@@ -190,26 +192,7 @@ class CalendarActivity : AppCompatActivity(),
     }
 
     private fun reloadRecyclerView(calendar: Calendar) {
-
-        TaskRepository.getTasksByDate(calendar.year, calendar.month, calendar.day,
-
-            object : TaskDataSource.LoadTasksCallback {
-
-                override fun onTasksLoaded(tasks: List<Task>) {
-                    mRecyclerViewAdapter.mDataList = tasks.filter {
-                        it.isActive
-                    }
-                    mRecyclerViewAdapter.notifyDataSetChanged()
-                    mRecyclerView.scrollToPosition(0)
-                }
-
-                override fun onDataNotAvailable() {
-                    mRecyclerViewAdapter.mDataList = arrayListOf()
-                    mRecyclerViewAdapter.notifyDataSetChanged()
-                    mRecyclerView.scrollToPosition(0)
-                }
-            })
-
+        TaskRepository.getTasksByDate(calendar.year, calendar.month, calendar.day, callback)
     }
 
     override fun onCalendarOutOfRange(calendar: Calendar?) {
@@ -235,5 +218,30 @@ class CalendarActivity : AppCompatActivity(),
         var month: Int = 0,
         var day: Int = 0
     )
+
+    class CalendarCallback(activity: CalendarActivity) : TaskDataSource.LoadTasksCallback {
+
+        private var activityRef = WeakReference(activity)
+
+        override fun onTasksLoaded(tasks: List<Task>) {
+            val activity = activityRef.get()
+            activity?.run {
+                mRecyclerViewAdapter.mDataList = tasks.filter {
+                    it.isActive
+                }
+                mRecyclerViewAdapter.notifyDataSetChanged()
+                mRecyclerView.scrollToPosition(0)
+            }
+        }
+
+        override fun onDataNotAvailable() {
+            val activity = activityRef.get()
+            activity?.run {
+                mRecyclerViewAdapter.mDataList = arrayListOf()
+                mRecyclerViewAdapter.notifyDataSetChanged()
+                mRecyclerView.scrollToPosition(0)
+            }
+        }
+    }
 
 }
