@@ -35,7 +35,7 @@ class CalendarActivity : AppCompatActivity(),
     CalendarView.OnCalendarLongClickListener,
     CalendarView.OnYearChangeListener {
 
-    private val callback = CalendarCallback(this)
+    private val callback = RecyclerViewSelectCallback(this)
 
     private lateinit var mRootView: View
 
@@ -219,7 +219,7 @@ class CalendarActivity : AppCompatActivity(),
         var day: Int = 0
     )
 
-    class CalendarCallback(activity: CalendarActivity) : TaskDataSource.LoadTasksCallback {
+    private class RecyclerViewSelectCallback(activity: CalendarActivity) : TaskDataSource.LoadTasksCallback {
 
         private var activityRef = WeakReference(activity)
 
