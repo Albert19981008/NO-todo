@@ -91,45 +91,7 @@ class LoginActivity : AppCompatActivity() {
     private fun fail(msg: String) = toast(msg)
 
     private fun testDb() {
-        TaskRepository.getTasks(object : TaskDataSource.LoadTasksCallback {
-            override fun onDataNotAvailable() {
-                TaskRepository.saveTask(
-                    Task(
-                        "testTaskTitle1",
-                        "testTaskDes1",
-                        2020,
-                        7,
-                        13,
-                        TaskRepository.userId
-                    )
-                )
-                val tmp = Task(
-                    "testTaskTitle2",
-                    "testTaskDes2",
-                    2020,
-                    6,
-                    26,
-                    TaskRepository.userId
-                )
-                TaskRepository.saveTask(tmp)
-                TaskRepository.completeTask(tmp.id)
-                TaskRepository.saveTask(
-                    Task(
-                        "testTaskTitle3",
-                        "testTaskDes3",
-                        2020,
-                        7,
-                        11,
-                        TaskRepository.userId
-                    )
-                )
-            }
-
-            override fun onTasksLoaded(tasks: List<Task>) {
-                loge(tasks.toString())
-                TaskRepository.completeTask(tasks[0].id)
-            }
-        })
+        TaskRepository.getTasks(TestTaskGenerator())
     }
 
     private class EnglishDigitsKeyListener : DigitsKeyListener() {
@@ -142,5 +104,47 @@ class LoginActivity : AppCompatActivity() {
             const val ENG_CHAR_AND_NUM =
                 "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
         }
+    }
+
+    private class TestTaskGenerator: TaskDataSource.LoadTasksCallback {
+
+        override fun onTasksLoaded(tasks: List<Task>) {
+            loge(tasks.toString())
+            TaskRepository.completeTask(tasks[0].id)
+        }
+
+        override fun onDataNotAvailable() {
+            TaskRepository.saveTask(
+                Task(
+                    "testTaskTitle1",
+                    "testTaskDes1",
+                    2020,
+                    7,
+                    13,
+                    TaskRepository.userId
+                )
+            )
+            val tmp = Task(
+                "testTaskTitle2",
+                "testTaskDes2",
+                2020,
+                6,
+                26,
+                TaskRepository.userId
+            )
+            TaskRepository.saveTask(tmp)
+            TaskRepository.completeTask(tmp.id)
+            TaskRepository.saveTask(
+                Task(
+                    "testTaskTitle3",
+                    "testTaskDes3",
+                    2020,
+                    7,
+                    11,
+                    TaskRepository.userId
+                )
+            )
+        }
+
     }
 }
