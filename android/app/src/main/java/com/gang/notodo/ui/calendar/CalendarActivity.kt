@@ -35,7 +35,8 @@ class CalendarActivity : AppCompatActivity(),
     CalendarView.OnCalendarLongClickListener,
     CalendarView.OnYearChangeListener {
 
-    private val callback = RecyclerViewSelectCallback(this)
+    private val recyclerViewSelectCallback = RecyclerViewSelectCallback(this)
+    private val calendarMarkRefreshCallback = CalendarMarkRefreshCallback(this)
 
     private lateinit var mRootView: View
 
@@ -65,17 +66,17 @@ class CalendarActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calendar)
         initView()
-        TaskRepository.addOnRefreshObserver(this::initDataAndBindView)
+        TaskRepository.addOnRefreshObserver(this::refreshDataAndBindView)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        TaskRepository.removeOnRefreshObserver(this::initDataAndBindView)
+        TaskRepository.removeOnRefreshObserver(this::refreshDataAndBindView)
     }
 
     override fun onResume() {
         super.onResume()
-        initDataAndBindView()
+        refreshDataAndBindView()
         reloadRecyclerView(getSchemeCalendar(selectDate.year, selectDate.month, selectDate.day, 0))
     }
 
@@ -149,33 +150,8 @@ class CalendarActivity : AppCompatActivity(),
     }
 
 
-    private fun initDataAndBindView() {
-        TaskRepository.getTasks(object : TaskDataSource.LoadTasksCallback {
-
-            override fun onTasksLoaded(tasks: List<Task>) {
-                dateWhichHasTasks.clear()
-                tasks
-                    .filter { it.isActive }
-                    .distinctBy { "" + it.year + "#" + it.month + "#" + it.day }
-                    .forEach {
-                        getSchemeCalendar(
-                            it.year,
-                            it.month,
-                            it.day,
-                            CalendarUtil.getRandomColor()
-                        ).let { it2 ->
-                            dateWhichHasTasks[it2.toString()] = it2
-                        }
-
-                    }
-                mCalendarView.setSchemeDate(dateWhichHasTasks)
-            }
-
-            override fun onDataNotAvailable() {
-                // nothing
-            }
-
-        })
+    private fun refreshDataAndBindView() {
+        TaskRepository.getTasks(calendarMarkRefreshCallback)
     }
 
     @SuppressLint("SetTextI18n")
@@ -192,7 +168,7 @@ class CalendarActivity : AppCompatActivity(),
     }
 
     private fun reloadRecyclerView(calendar: Calendar) {
-        TaskRepository.getTasksByDate(calendar.year, calendar.month, calendar.day, callback)
+        TaskRepository.getTasksByDate(calendar.year, calendar.month, calendar.day, recyclerViewSelectCallback)
     }
 
     override fun onCalendarOutOfRange(calendar: Calendar?) {
@@ -244,4 +220,34 @@ class CalendarActivity : AppCompatActivity(),
         }
     }
 
+    private class CalendarMarkRefreshCallback(activity: CalendarActivity): TaskDataSource.LoadTasksCallback {
+
+        private val activityRef = WeakReference(activity)
+
+        override fun onTasksLoaded(tasks: List<Task>) {
+            activityRef.get()?.run {
+                dateWhichHasTasks.clear()
+                tasks
+                    .filter { it.isActive }
+                    .distinctBy { "" + it.year + "#" + it.month + "#" + it.day }
+                    .forEach {
+                        getSchemeCalendar(
+                            it.year,
+                            it.month,
+                            it.day,
+                            CalendarUtil.getRandomColor()
+                        ).let { it2 ->
+                            dateWhichHasTasks[it2.toString()] = it2
+                        }
+
+                    }
+                mCalendarView.setSchemeDate(dateWhichHasTasks)
+            }
+        }
+
+        override fun onDataNotAvailable() {
+            // nothing
+        }
+
+    }
 }
