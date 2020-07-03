@@ -56,17 +56,11 @@ class ListFragment(contentLayoutId: Int, active: Boolean) : Fragment(contentLayo
             }
 
             override fun onTasksLoaded(tasks: List<Task>) {
-                if (mActive) {
-                    setDataAndRefresh(tasks.filter {
-                        it.isActive
-                    })
-                } else {
-                    setDataAndRefresh(tasks.filter {
-                        it.isCompleted
-                    })
+                val targetTasks = tasks.filter {
+                    if (mActive) it.isActive else it.isCompleted
                 }
+                setDataAndRefresh(targetTasks)
             }
-
         })
     }
 
