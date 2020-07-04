@@ -1,5 +1,6 @@
 package com.gang.notodo.ui
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.InputType
 import android.text.method.DigitsKeyListener
@@ -27,10 +28,12 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginButton: Button
     private lateinit var registerButton: Button
     private val authenticate: Authenticate = UserAgent
+    private lateinit var sps: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        sps = getSharedPreferences("login_name", MODE_PRIVATE)
         initView()
     }
 
@@ -56,6 +59,10 @@ class LoginActivity : AppCompatActivity() {
         setupActionBar(R.id.toolBar) {
             title = "NO-todo"
         }
+
+        sps.getString(NAME_KEY, "")
+            .takeIf { !it.isNullOrBlank() }
+            ?.let { userNameView.setText(it) }
     }
 
     private fun login() {
@@ -70,6 +77,11 @@ class LoginActivity : AppCompatActivity() {
         TaskRepository.userId = user.userId
         startActivity<CalendarActivity>()
         testDb()
+        sps.edit()
+            .apply {
+                putString(NAME_KEY, userNameView.text.toString())
+                apply()
+            }
         finish()
     }
 
@@ -106,7 +118,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private class TestTaskGenerator: TaskDataSource.LoadTasksCallback {
+    private class TestTaskGenerator : TaskDataSource.LoadTasksCallback {
 
         override fun onTasksLoaded(tasks: List<Task>) {
             loge(tasks.toString())
@@ -145,6 +157,9 @@ class LoginActivity : AppCompatActivity() {
                 )
             )
         }
+    }
 
+    companion object {
+        const val NAME_KEY = "name_key"
     }
 }
